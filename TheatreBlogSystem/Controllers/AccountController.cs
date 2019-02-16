@@ -151,7 +151,8 @@ namespace TheatreBlogSystem.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                //Change this
+                var user = new Customer { UserName = model.Email, Email = model.Email, TimeOfRegistration = DateTime.Now, DateOfBirth = model.DateOfBirth, Forename = model.Forename, Surname = model.Surname};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -367,7 +368,7 @@ namespace TheatreBlogSystem.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new Customer { UserName = model.Email, Email = model.Email, TimeOfRegistration = DateTime.Now, DateOfBirth = DateTime.Now, Forename = "", Surname = "" };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

@@ -6,7 +6,6 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
 using TheatreBlogSystem.Models;
 
 namespace TheatreBlogSystem.Controllers
@@ -18,7 +17,7 @@ namespace TheatreBlogSystem.Controllers
         // GET: Posts
         public ActionResult Index()
         {
-            var posts = db.Posts.Include(p => p.Category);
+            var posts = db.Posts.Include(p => p.Category).Include(p => p.Staff);
             return View(posts.ToList());
         }
 
@@ -41,6 +40,7 @@ namespace TheatreBlogSystem.Controllers
         public ActionResult Create()
         {
             ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name");
+            ViewBag.StaffId = new SelectList(db.Users, "Id", "Forename");
             return View();
         }
 
@@ -49,26 +49,20 @@ namespace TheatreBlogSystem.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PostId,Title,Body,CategoryId")] Post post)
+        public ActionResult Create([Bind(Include = "PostId,Title,Body,IsApproved,DatePublished,StaffId,CategoryId")] Post post)
         {
-            
-            var userId = Request.IsAuthenticated ? HttpContext.User.Identity.GetUserId() : null;
-            if (userId == null || userId.Equals(string.Empty))
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
+            post.IsApproved = false;
+            post.DatePublished = DateTime.Now;
+            post.StaffId = ViewBag.StaffId;
             if (ModelState.IsValid)
             {
-                post.DatePublished = DateTime.Now;
-                post.IsApproved = false;
-                post.StaffId = userId;
                 db.Posts.Add(post);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
             ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name", post.CategoryId);
+            ViewBag.StaffId = new SelectList(db.Users, "Id", "Forename", post.StaffId);
             return View(post);
         }
 
@@ -85,6 +79,7 @@ namespace TheatreBlogSystem.Controllers
                 return HttpNotFound();
             }
             ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name", post.CategoryId);
+            ViewBag.StaffId = new SelectList(db.Users, "Id", "Forename", post.StaffId);
             return View(post);
         }
 
@@ -102,6 +97,7 @@ namespace TheatreBlogSystem.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name", post.CategoryId);
+            ViewBag.StaffId = new SelectList(db.Users, "Id", "Forename", post.StaffId);
             return View(post);
         }
 

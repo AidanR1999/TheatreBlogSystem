@@ -15,16 +15,16 @@ namespace TheatreBlogSystem.Models
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
-        
-            public ApplicationDbContext()
-                : base("TheatreDBConnection", throwIfV1Schema: false)
-            {
-                Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ApplicationDbContext>());
-            }
 
-            public static ApplicationDbContext Create()
-            {
-                return new ApplicationDbContext();
-            }
+        public ApplicationDbContext()
+            : base("TheatreDBConnection", throwIfV1Schema: false)
+        {
+            Database.SetInitializer(new DatabaseInitialiser());
+        }
+
+        public static ApplicationDbContext Create()
+        {
+            return new ApplicationDbContext();
         }
     }
+}

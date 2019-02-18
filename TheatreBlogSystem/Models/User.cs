@@ -15,7 +15,7 @@ namespace TheatreBlogSystem.Models
     /// </summary>
     public abstract class User : IdentityUser
     {
-        public DateTime TimeOfRegistration { get; set; }
+        public DateTime? TimeOfRegistration { get; set; }
         public string Forename { get; set; }
         public string Surname { get; set; }
         public DateTime DateOfBirth { get; set; }

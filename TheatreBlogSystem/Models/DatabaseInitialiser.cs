@@ -8,7 +8,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace TheatreBlogSystem.Models
 {
-    public class DatabaseInitialiser:DropCreateDatabaseAlways<ApplicationDbContext>
+    public class DatabaseInitialiser : DropCreateDatabaseIfModelChanges<ApplicationDbContext>
     {
         protected override void Seed(ApplicationDbContext context)
         {
@@ -66,7 +66,8 @@ namespace TheatreBlogSystem.Models
                         UserName = "admin@thelocaltheatre.com",
                         Email = "admin@thelocaltheatre.com",
                         TimeOfRegistration = DateTime.Now,
-                        EmailConfirmed = true
+                        EmailConfirmed = true,
+                        DateOfBirth = DateTime.Parse("02/11/1999")
 
                     };
                     userManager.Create(administrator, "admin123");
@@ -82,7 +83,8 @@ namespace TheatreBlogSystem.Models
                         UserName = "manager@thelocaltheatre.com",
                         Email = "manager@thelocaltheatre.com",
                         TimeOfRegistration = DateTime.Now,
-                        EmailConfirmed = true
+                        EmailConfirmed = true,
+                        DateOfBirth = DateTime.Parse("02/11/1999")
 
                     };
                     userManager.Create(manager, "manager");
@@ -98,7 +100,8 @@ namespace TheatreBlogSystem.Models
                         UserName = "jeff@thelocaltheatre.com",
                         Email = "jeff@thelocaltheatre.com",
                         TimeOfRegistration = DateTime.Now,
-                        EmailConfirmed = true
+                        EmailConfirmed = true,
+                        DateOfBirth = DateTime.Parse("02/11/1999")
                     };
 
                     userManager.Create(jeff, "staff1");
@@ -113,6 +116,7 @@ namespace TheatreBlogSystem.Models
                         Email = "xander@thelocaltheatre.com",
                         TimeOfRegistration = DateTime.Now,
                         EmailConfirmed = true,
+                        DateOfBirth = DateTime.Parse("02/11/1999")
                     };
                     userManager.Create(alex, "staff2");
                     userManager.AddToRoles(alex.Id, "Staff");
@@ -126,6 +130,7 @@ namespace TheatreBlogSystem.Models
                         Email = "paul@thelocaltheatre.com",
                         TimeOfRegistration = DateTime.Now,
                         EmailConfirmed = true,
+                        DateOfBirth = DateTime.Parse("02/11/1999")
                     };
                     userManager.Create(paul, "staff3");
                     userManager.AddToRoles(paul.Id, "Staff");
@@ -142,7 +147,8 @@ namespace TheatreBlogSystem.Models
                         Surname = "Crow",
                         TimeOfRegistration = DateTime.Now,
                         EmailConfirmed = true,
-                        IsSuspended = false
+                        IsSuspended = false,
+                        DateOfBirth = DateTime.Parse("02/11/1999")
 
                     };
                     userManager.Create(customer, "customer1");
@@ -160,7 +166,8 @@ namespace TheatreBlogSystem.Models
                         EmailConfirmed = true,
                         Forename = "Bob",
                         Surname = "Williams",
-                        IsSuspended = false
+                        IsSuspended = false,
+                        DateOfBirth = DateTime.Parse("02/11/1999")
                     };
                     userManager.Create(bob, "customer2");
                     userManager.AddToRoles(bob.Id, "Customer");
@@ -176,7 +183,8 @@ namespace TheatreBlogSystem.Models
                         Forename = "Steve",
                         Surname = "Fist",
                         TimeOfRegistration = DateTime.Now,
-                        IsSuspended = false
+                        IsSuspended = false,
+                        DateOfBirth = DateTime.Parse("02/11/1999")
                     };
                     userManager.Create(steve, "customer3");
                     userManager.AddToRoles(steve.Id, "Customer");
@@ -191,7 +199,8 @@ namespace TheatreBlogSystem.Models
                         EmailConfirmed = true,
                         Forename = "Garry",
                         Surname = "Hugh",
-                        IsSuspended = false
+                        IsSuspended = false,
+                        DateOfBirth = DateTime.Parse("02/11/1999")
                     };
                     userManager.Create(gary, "customer4");
                     userManager.AddToRoles(gary.Id, "Customer");
@@ -208,7 +217,8 @@ namespace TheatreBlogSystem.Models
                         EmailConfirmed = true,
                         Forename = "Bill",
                         Surname = "Black",
-                        IsSuspended = true
+                        IsSuspended = true,
+                        DateOfBirth = DateTime.Parse("02/11/1999")
                     };
                     userManager.Create(bill, "suspended1");
                     userManager.AddToRoles(bill.Id, "Suspended");
@@ -227,7 +237,8 @@ namespace TheatreBlogSystem.Models
                         EmailConfirmed = true,
                         Forename = "Greg",
                         Surname = "Grey",
-                        IsSuspended = true
+                        IsSuspended = true,
+                        DateOfBirth = DateTime.Parse("02/11/1999")
                     };
                     userManager.Create(greg, "suspended2");
                     userManager.AddToRoles(greg.Id, "Suspended");

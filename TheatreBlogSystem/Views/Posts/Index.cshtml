@@ -12,7 +12,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Category.Name)
+            Category
         </th>
         <th>
             Posted by
@@ -29,6 +29,9 @@
         <th>
             @Html.DisplayNameFor(model => model.DatePublished)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ImageLink)
+        </th>
         <th></th>
     </tr>
 
@@ -38,6 +41,7 @@
             @Html.DisplayFor(modelItem => item.Category.Name)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.Staff.Forename)
             @Html.DisplayFor(modelItem => item.Staff.Surname)
         </td>
         <td>
@@ -53,9 +57,12 @@
             @Html.DisplayFor(modelItem => item.DatePublished)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.PostId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.PostId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.PostId })
+            @Html.DisplayFor(modelItem => item.ImageLink)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.PostId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.PostId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.PostId })
         </td>
     </tr>
 }

@@ -1,0 +1,18 @@
+﻿@model TheatreBlogSystem.ViewModels.PostsViewModel
+
+@{
+    ViewBag.Title = "View Posts";
+}
+
+<h2>All Posts</h2>
+
+@foreach (var Post in Model.Posts)
+{
+    <center>
+        <h1>@Post.Title</h1>
+        <img src="@Post.ImageLink" />
+        <p>@Post.Body</p>
+    </center>
+    <p>Created By @Post.Staff.Forename @Post.Staff.Surname at @Post.DatePublished</p>
+}
+

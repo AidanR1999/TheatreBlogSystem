@@ -18,6 +18,7 @@ namespace TheatreBlogSystem.Models
         public string Body { get; set; }
         public bool IsApproved { get; set; }
         public DateTime DatePublished { get; set; }
+        public string ImageLink { get; set; }
 
         public Post()
         {

@@ -63,6 +63,8 @@ namespace TheatreBlogSystem.Models
 
                     var administrator = new Staff
                     {
+                        Forename = "Admin",
+                        Surname = "Man",
                         UserName = "admin@thelocaltheatre.com",
                         Email = "admin@thelocaltheatre.com",
                         TimeOfRegistration = DateTime.Now,
@@ -126,6 +128,8 @@ namespace TheatreBlogSystem.Models
                 {
                     var paul = new Staff
                     {
+                        Forename = "Paul",
+                        Surname = "Senior",
                         UserName = "Paul",
                         Email = "paul@thelocaltheatre.com",
                         TimeOfRegistration = DateTime.Now,
@@ -243,10 +247,17 @@ namespace TheatreBlogSystem.Models
                     userManager.Create(greg, "suspended2");
                     userManager.AddToRoles(greg.Id, "Suspended");
                 }
+
+                //create categories
+                
+
                 context.SaveChanges();
             }
 
            // context.SaveChanges();
+
+
+            
 
 
 

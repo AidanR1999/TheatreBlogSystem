@@ -9,10 +9,10 @@ namespace TheatreBlogSystem.Migrations
     {
         public override void Up()
         {
-            Sql("INSERT INTO Categories (CategoryId, Name) VALUES(1, Announcement)");
-            Sql("INSERT INTO Categories (CategoryId, Name) VALUES(2, Horror)");
-            Sql("INSERT INTO Categories (CategoryId, Name) VALUES(3, Comedy)");
-            Sql("INSERT INTO Categories (CategoryId, Name) VALUES(4, Romance)");
+            Sql("INSERT INTO Categories (Name) VALUES('Announcement')");
+            Sql("INSERT INTO Categories (Name) VALUES('Horror')");
+            Sql("INSERT INTO Categories (Name) VALUES('Comedy')");
+            Sql("INSERT INTO Categories (Name) VALUES('Romance')");
         }
         
         public override void Down()

@@ -20,10 +20,11 @@ namespace TheatreBlogSystem
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+                      "~/Content/js/dropdown-menu.js",
                       "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
+                      "~/Content/clean-blog.css",
                       "~/Content/site.css"));
         }
     }

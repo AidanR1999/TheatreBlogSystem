@@ -181,14 +181,18 @@ namespace TheatreBlogSystem.Controllers
             return View(model);
         }
 
-        public ActionResult PostDetails(int? CategoryId)
+        public ActionResult PostDetails(int postId)
         {
+            Post model = new Post();
             ApplicationDbContext db = ApplicationDbContext.Create();
 
-            PostsViewModel model = new PostsViewModel
+            foreach (var post in db.Posts)
             {
-                Posts = db.Posts
-            };
+                if (post.PostId == postId)
+                {
+                    model = post;
+                }
+            }
 
             return View(model);
         }

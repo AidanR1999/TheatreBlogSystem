@@ -17,7 +17,7 @@ namespace TheatreBlogSystem.Controllers
         // GET: Comments
         public ActionResult Index()
         {
-            var comments = db.Comments.Include(c => c.Post);
+            var comments = db.Comments.Include(c => c.Post).Include(c => c.User);
             return View(comments.ToList());
         }
 
@@ -40,6 +40,7 @@ namespace TheatreBlogSystem.Controllers
         public ActionResult Create()
         {
             ViewBag.PostId = new SelectList(db.Posts, "PostId", "Title");
+            ViewBag.UserId = new SelectList(db.Users, "Id", "Forename");
             return View();
         }
 
@@ -58,6 +59,7 @@ namespace TheatreBlogSystem.Controllers
             }
 
             ViewBag.PostId = new SelectList(db.Posts, "PostId", "Title", comment.PostId);
+            ViewBag.UserId = new SelectList(db.Users, "Id", "Forename", comment.UserId);
             return View(comment);
         }
 
@@ -74,6 +76,7 @@ namespace TheatreBlogSystem.Controllers
                 return HttpNotFound();
             }
             ViewBag.PostId = new SelectList(db.Posts, "PostId", "Title", comment.PostId);
+            ViewBag.UserId = new SelectList(db.Users, "Id", "Forename", comment.UserId);
             return View(comment);
         }
 
@@ -91,6 +94,7 @@ namespace TheatreBlogSystem.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.PostId = new SelectList(db.Posts, "PostId", "Title", comment.PostId);
+            ViewBag.UserId = new SelectList(db.Users, "Id", "Forename", comment.UserId);
             return View(comment);
         }
 

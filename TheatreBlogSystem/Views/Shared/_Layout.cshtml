@@ -38,16 +38,7 @@
                         <li>@Html.ActionLink("Blog", "ViewPosts", "Posts", new { area = "" }, new { @class = "navbar-brand" })</li>
                         @if (User.IsInRole("Admin"))
                         {
-                            <li class="dropdown" data-admin-menu>
-                                <a href="#" class="navbar-brand">
-                                    Admin
-                                </a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="/Views/Categories/Index.cshtml">&nbsp;&nbsp;Category</a></li>
-                                    <li><a href="/Views/Posts/Index.cshtml">&nbsp;&nbsp;Post</a></li>
-                                    <li><a href="/Views/Manage/Index.cshtml">&nbsp;&nbsp;Users</a></li>
-                                </ul>
-                            </li>
+                            <li>@Html.ActionLink("Admin", "Index", "Admin", new { area = "" }, new { @class = "navbar-brand" })</li>
                         }
                     </ul>
                     @Html.Partial("_LoginPartial")

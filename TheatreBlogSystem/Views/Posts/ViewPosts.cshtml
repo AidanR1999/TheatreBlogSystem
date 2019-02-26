@@ -5,43 +5,98 @@
 }
 
 <!--Header-->
-<header class="masthead" style="background-image: url('/Content/img/theatre_performance.jpg')">
+<header class="masthead" style="background-image: url('/Content/img/active-adult-artist-358010.jpg')">
     <div class="overlay"></div>
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto">
                 <div class="site-heading">
-                    <h1>All Posts</h1>
+                    <h1>@ViewBag.CategoryName</h1>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
-@foreach (var Post in Model.Posts)
+@*<right>
+    @{
+        List<SelectListItem> dropDownItems = new List<SelectListItem>();
+
+        foreach (var category in Model.Categories)
+        {
+
+            dropDownItems.Add(new SelectListItem
+            {
+                Text = category.Name,
+                Value = category.Name
+            });
+        }
+    }
+
+    @Html.DropDownListFor(c => c.Categories, dropDownItems, "Filter by Category")
+
+    <a href="@Html.Raw(Url.Action("PostDetails", "Posts", ""))">Filter</a>
+</right>*@
+
+
+@if (ViewBag.CategoryName.Equals("All Posts"))
 {
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-md-10 mx-auto">
-                <div class="post-preview">
-                    <a href="@Html.Raw(Url.Action("PostDetails", "Posts", new { postId = Post.PostId }))">
-                        <h2 class="post-title">
-                            @Post.Title
-                        </h2>
-                        <h3 class="post-subtitle">
-                            @Post.Category.Name
-                        </h3>
-                    </a>
-                    <p class="post-meta">
-                        Posted by
-                        <a href="#">@Post.Staff.Forename @Post.Staff.Surname</a>
-                        on @Post.DatePublished
-                    </p>
+    foreach (var Post in Model.Posts)
+    {
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <div class="post-preview">
+                        <a href="@Html.Raw(Url.Action("PostDetails", "Posts", new { postId = Post.PostId }))">
+                            <h2 class="post-title">
+                                @Post.Title
+                            </h2>
+                            <h3 class="post-subtitle">
+                                @Post.Category.Name
+                            </h3>
+                        </a>
+                        <p class="post-meta">
+                            Posted by
+                            <a href="#">@Post.Staff.Forename @Post.Staff.Surname</a>
+                            on @Post.DatePublished
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    }
 }
+else
+{
+    foreach (var Post in Model.Posts)
+    {
+        if (ViewBag.CategoryName.Equals(Post.Category.Name))
+        {
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-10 mx-auto">
+                        <div class="post-preview">
+                            <a href="@Html.Raw(Url.Action("PostDetails", "Posts", new {postId = Post.PostId}))">
+                                <h2 class="post-title">
+                                    @Post.Title
+                                </h2>
+                                <h3 class="post-subtitle">
+                                    @Post.Category.Name
+                                </h3>
+                            </a>
+                            <p class="post-meta">
+                                Posted by
+                                <a href="#">@Post.Staff.Forename @Post.Staff.Surname</a>
+                                on @Post.DatePublished
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+}
+
 
 <!-- Bootstrap core JavaScript -->
 <script src="/Scripts/jquery-3.3.1.min.js"></script>

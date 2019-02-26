@@ -9,7 +9,7 @@ namespace TheatreBlogSystem.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
             ContextKey = "TheatreBlogSystem.Models.ApplicationDbContext";
         }
 

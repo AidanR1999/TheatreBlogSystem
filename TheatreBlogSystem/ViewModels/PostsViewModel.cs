@@ -9,10 +9,12 @@ namespace TheatreBlogSystem.ViewModels
     public class PostsViewModel
     {
         public IEnumerable<Post> Posts { get; set; }
+        public IEnumerable<Category> Categories { get; set; }
 
         public PostsViewModel()
         {
             Posts = new List<Post>();
+            Categories = new List<Category>();
         }
     }
 }

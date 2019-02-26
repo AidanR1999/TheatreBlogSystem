@@ -1,44 +1,23 @@
-﻿@model dynamic
+﻿@model IEnumerable<TheatreBlogSystem.Models.Comment>
 
-@{
-    ViewBag.Title = "Admin";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-<!--Header-->
-<header class="masthead">
-    <div class="overlay"></div>
+@foreach (var comment in Model)
+{
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto">
-                <div class="site-heading">
-                    <h1>Administration</h1>
+                <div class="post-preview">
+                        <h2 class="post-title">
+                            @comment.Body
+                        </h2>
+                    <p class="post-meta">
+                        Posted by
+                        <a href="#">@comment.User.Forename @comment.User.Surname</a>
+                    </p>
                 </div>
             </div>
         </div>
     </div>
-</header>
-
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-            <div class="post-preview">
-                <a href="@Html.Raw(Url.Action("Create", "Staff"))">
-                    <h2 class="post-title">
-                        Edit Staff
-                    </h2>
-                    <hr />
-                </a>
-                <a href="@Html.Raw(Url.Action("Create", "Staff"))">
-                    <h2 class="post-title">
-                        Test
-                    </h2>
-                    <hr />
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
+}
 
 <!-- Bootstrap core JavaScript -->
 <script src="/Scripts/jquery-3.3.1.min.js"></script>

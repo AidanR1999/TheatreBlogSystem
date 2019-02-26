@@ -24,21 +24,6 @@ namespace TheatreBlogSystem.Controllers
             return View(posts.ToList());
         }
 
-        // GET: Posts/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Post post = db.Posts.Find(id);
-            if (post == null)
-            {
-                return HttpNotFound();
-            }
-            return View(post);
-        }
-
         // GET: Posts/Create
         public ActionResult Create()
         {
@@ -169,22 +154,47 @@ namespace TheatreBlogSystem.Controllers
 
 
         //GET: ViewPosts
-        public ActionResult ViewPosts(int? CategoryId)
+        public ActionResult ViewPosts()
         {
             ApplicationDbContext db = ApplicationDbContext.Create();
 
             PostsViewModel model = new PostsViewModel
             {
-                Posts = db.Posts
+                Posts = db.Posts,
+                Categories = db.Categories
             };
+
+            ViewBag.CategoryName = "All Posts";
 
             return View(model);
         }
 
-        public ActionResult PostDetails(int postId)
+        //POST: ViewPosts
+        [HttpPost]
+        public ActionResult ViewPosts(string categoryName)
+        {
+            ApplicationDbContext db = ApplicationDbContext.Create();
+
+            PostsViewModel model = new PostsViewModel
+            {
+                Posts = db.Posts,
+                Categories = db.Categories
+            };
+
+            ViewBag.CategoryName = categoryName;
+
+            return View(model);
+        }
+
+        public ActionResult PostDetails(int? postId)
         {
             Post model = new Post();
             ApplicationDbContext db = ApplicationDbContext.Create();
+
+            if (postId == null)
+            {
+                return RedirectToAction("ViewPosts", "Posts");
+            }
 
             foreach (var post in db.Posts)
             {
@@ -192,6 +202,39 @@ namespace TheatreBlogSystem.Controllers
                 {
                     model = post;
                 }
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult PostDetails(int? postId, string comment)
+        {
+            Post model = new Post();
+            Comment Comment = new Comment();
+
+            ApplicationDbContext db = ApplicationDbContext.Create();
+
+            if (postId == null)
+            {
+                return RedirectToAction("ViewPosts", "Posts");
+            }
+
+            foreach (var post in db.Posts)
+            {
+                if (post.PostId == postId)
+                {
+                    Comment.PostId = post.PostId;
+                    Comment.Body = comment;
+                    Comment.UserId = User.Identity.Name;
+                    Comment.Date = DateTime.Now;
+                }
+            }
+
+            if (ModelState.IsValid)
+            {
+                db.Comments.Add(Comment);
+                db.SaveChanges();
             }
 
             return View(model);

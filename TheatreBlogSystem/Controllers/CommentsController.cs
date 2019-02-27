@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using TheatreBlogSystem.Models;
 
 namespace TheatreBlogSystem.Controllers
@@ -131,6 +132,33 @@ namespace TheatreBlogSystem.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        [HttpPost]
+        public ActionResult MakeComment(string commentBody, int? postId)
+        {
+            Comment comment = new Comment()
+                ;
+            comment.Body = commentBody;
+            comment.Date = DateTime.Now;
+            comment.UserId = User.Identity.GetUserId();
+            if (postId == null)
+                RedirectToAction("ViewPosts", "Posts");
+
+            comment.PostId = (int) postId;
+
+            if (ModelState.IsValid)
+            {
+                db.Comments.Add(comment);
+                db.SaveChanges();
+            }
+            return RedirectToAction("PostDetails", "Posts", new { postId });
+        }
+
+        //GET: ViewComments PartialView
+        public PartialViewResult _ViewComments(ICollection<Comment> comments)
+        {
+            return PartialView(comments);
         }
     }
 }

@@ -16,13 +16,12 @@ namespace TheatreBlogSystem.Models
         public int CommentId { get; set; }
         public DateTime Date { get; set; }
         public string Body { get; set; }
-        public bool IsApproved { get; set; }
 
         public Comment()
         {
 
         }
-
+            
         //navigational properties
         //1:M - User:Comment
         [InverseProperty("User")]

@@ -154,23 +154,6 @@ namespace TheatreBlogSystem.Controllers
 
 
         //GET: ViewPosts
-        public ActionResult ViewPosts()
-        {
-            ApplicationDbContext db = ApplicationDbContext.Create();
-
-            PostsViewModel model = new PostsViewModel
-            {
-                Posts = db.Posts,
-                Categories = db.Categories
-            };
-
-            ViewBag.CategoryName = "All Posts";
-
-            return View(model);
-        }
-
-        //POST: ViewPosts
-        [HttpPost]
         public ActionResult ViewPosts(string categoryName)
         {
             ApplicationDbContext db = ApplicationDbContext.Create();
@@ -180,6 +163,11 @@ namespace TheatreBlogSystem.Controllers
                 Posts = db.Posts,
                 Categories = db.Categories
             };
+
+            if (categoryName == null)
+            {
+                categoryName = "All Post";
+            }
 
             ViewBag.CategoryName = categoryName;
 
@@ -238,6 +226,12 @@ namespace TheatreBlogSystem.Controllers
             }
 
             return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult FilterByCategory(string filter)
+        {
+            return RedirectToAction("ViewPosts", "Posts", new { categoryName = filter });
         }
     }
 }

@@ -11,35 +11,43 @@
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto">
                 <div class="site-heading">
-                    <h1>@ViewBag.CategoryName</h1>
+                    <h1>@ViewBag.CategoryName's</h1>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
-@*<right>
-    @{
-        List<SelectListItem> dropDownItems = new List<SelectListItem>();
-
-        foreach (var category in Model.Categories)
-        {
-
+@using (Html.BeginForm("FilterByCategory", "Posts"))
+{
+    <right>
+        @{
+            List<SelectListItem> dropDownItems = new List<SelectListItem>();
             dropDownItems.Add(new SelectListItem
             {
-                Text = category.Name,
-                Value = category.Name
+                Text = "All Post",
+                Value = "All Post"
             });
+
+            foreach (var category in Model.Categories)
+            {
+
+                dropDownItems.Add(new SelectListItem
+                {
+                    Text = category.Name,
+                    Value = category.Name
+                });
+            }
         }
-    }
 
-    @Html.DropDownListFor(c => c.Categories, dropDownItems, "Filter by Category")
+        @Html.DropDownList("filter", dropDownItems)
 
-    <a href="@Html.Raw(Url.Action("PostDetails", "Posts", ""))">Filter</a>
-</right>*@
+        <input type="submit" name="filter" value="Filter by Category"/>
+    </right>
+}
 
 
-@if (ViewBag.CategoryName.Equals("All Posts"))
+@if (ViewBag.CategoryName.Equals("All Post"))
 {
     foreach (var Post in Model.Posts)
     {

@@ -1961,8 +1961,8 @@
     <Content Include="Views\Posts\Delete.cshtml" />
     <Content Include="Views\Posts\Edit.cshtml" />
     <Content Include="Views\Posts\Index.cshtml" />
-    <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Admin\ApprovePosts.cshtml" />
+    <Content Include="Views\BlogManagement\Index.cshtml" />
+    <Content Include="Views\BlogManagement\ApprovePosts.cshtml" />
     <Content Include="Views\Posts\ViewPosts.cshtml" />
     <Content Include="Views\Posts\PostDetails.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />

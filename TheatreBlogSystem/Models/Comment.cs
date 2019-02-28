@@ -16,6 +16,7 @@ namespace TheatreBlogSystem.Models
         public int CommentId { get; set; }
         public DateTime Date { get; set; }
         public string Body { get; set; }
+        public bool CommentIsApproved { get; set; }
 
         public Comment()
         {

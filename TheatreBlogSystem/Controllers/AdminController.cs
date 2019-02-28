@@ -7,7 +7,7 @@ using TheatreBlogSystem.Models;
 
 namespace TheatreBlogSystem.Controllers
 {
-    public class AdminController : Controller
+    public class BlogManagementController : Controller
     {
         // GET: Admin
         public ActionResult Index()

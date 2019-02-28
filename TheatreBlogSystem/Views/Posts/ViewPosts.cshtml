@@ -51,34 +51,7 @@
 {
     foreach (var Post in Model.Posts)
     {
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-md-10 mx-auto">
-                    <div class="post-preview">
-                        <a href="@Html.Raw(Url.Action("PostDetails", "Posts", new { postId = Post.PostId }))">
-                            <h2 class="post-title">
-                                @Post.Title
-                            </h2>
-                            <h3 class="post-subtitle">
-                                @Post.Category.Name
-                            </h3>
-                        </a>
-                        <p class="post-meta">
-                            Posted by
-                            <a href="#">@Post.Staff.Forename @Post.Staff.Surname</a>
-                            on @Post.DatePublished
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
-}
-else
-{
-    foreach (var Post in Model.Posts)
-    {
-        if (ViewBag.CategoryName.Equals(Post.Category.Name))
+        if (Post.IsApproved || User.IsInRole("Admin"))
         {
             <div class="container">
                 <div class="row">
@@ -96,11 +69,52 @@ else
                                 Posted by
                                 <a href="#">@Post.Staff.Forename @Post.Staff.Surname</a>
                                 on @Post.DatePublished
+                                @if (User.IsInRole("Admin") && !Post.IsApproved)
+                                {
+                                    <b>@Html.ActionLink("Approve", "ApprovePost", new {postId = Post.PostId})</b>
+                                }
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
+        }
+    }
+}
+else
+{
+    foreach (var Post in Model.Posts)
+    {
+        if (Post.IsApproved || User.IsInRole("Admin"))
+        {
+            if (ViewBag.CategoryName.Equals(Post.Category.Name))
+            {
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 col-md-10 mx-auto">
+                            <div class="post-preview">
+                                <a href="@Html.Raw(Url.Action("PostDetails", "Posts", new {postId = Post.PostId}))">
+                                    <h2 class="post-title">
+                                        @Post.Title
+                                    </h2>
+                                    <h3 class="post-subtitle">
+                                        @Post.Category.Name
+                                    </h3>
+                                </a>
+                                <p class="post-meta">
+                                    Posted by
+                                    <a href="#">@Post.Staff.Forename @Post.Staff.Surname</a>
+                                    on @Post.DatePublished
+                                    @if (User.IsInRole("Admin") && !Post.IsApproved)
+                                    {
+                                        <b>@Html.ActionLink("Approve", "ApprovePost", new {postId = Post.PostId})</b>
+                                    }
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
         }
     }
 }

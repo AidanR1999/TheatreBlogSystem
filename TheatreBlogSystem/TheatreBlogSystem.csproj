@@ -197,7 +197,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ModerationController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -207,15 +207,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201902190939072_InitialCreate.cs" />
-    <Compile Include="Migrations\201902190939072_InitialCreate.Designer.cs">
-      <DependentUpon>201902190939072_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201902191320277_PopulateCategories.cs" />
-    <Compile Include="Migrations\201902191320277_PopulateCategories.Designer.cs">
-      <DependentUpon>201902191320277_PopulateCategories.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Comment.cs" />
@@ -240,7 +231,11 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\clean-blog.css" />
     <Content Include="Content\css\clean-blog.min.css" />
+    <Content Include="Content\img\acting-art-color-189449.jpg" />
     <Content Include="Content\img\active-adult-artist-358010.jpg" />
+    <Content Include="Content\img\actors-artists-ballet-45258.jpg" />
+    <Content Include="Content\img\balance-ballerina-ballet-46158.jpg" />
+    <Content Include="Content\img\black-background-close-up-dancing-1405815.jpg" />
     <Content Include="Content\img\home-bg.jpg" />
     <Content Include="Content\img\Local_Theatre_Company_Logo.jpg" />
     <Content Include="Content\img\Local_Theatre_Company_Logo.png" />
@@ -1961,8 +1956,7 @@
     <Content Include="Views\Posts\Delete.cshtml" />
     <Content Include="Views\Posts\Edit.cshtml" />
     <Content Include="Views\Posts\Index.cshtml" />
-    <Content Include="Views\BlogManagement\Index.cshtml" />
-    <Content Include="Views\BlogManagement\ApprovePosts.cshtml" />
+    <Content Include="Views\Moderation\Index.cshtml" />
     <Content Include="Views\Posts\ViewPosts.cshtml" />
     <Content Include="Views\Posts\PostDetails.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
@@ -1981,21 +1975,11 @@
     <Content Include="Views\Comments\Edit.cshtml" />
     <Content Include="Views\Comments\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201902190939072_InitialCreate.resx">
-      <DependentUpon>201902190939072_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201902191320277_PopulateCategories.resx">
-      <DependentUpon>201902191320277_PopulateCategories.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />

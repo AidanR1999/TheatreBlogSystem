@@ -224,5 +224,24 @@ namespace TheatreBlogSystem.Controllers
         {
             return RedirectToAction("ViewPosts", "Posts", new { categoryName = filter });
         }
+
+        public ActionResult ApprovePost(int? postId)
+        {
+            if(postId == null)
+                return RedirectToAction("ViewPosts", "Posts");
+
+            ApplicationDbContext db = ApplicationDbContext.Create();
+            Post post = db.Posts.Find(postId);
+
+            if(post == null)
+                return RedirectToAction("ViewPosts", "Posts");
+
+            post.IsApproved = true;
+
+            db.Entry(post).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("ViewPosts", "Posts");
+        }
     }
 }

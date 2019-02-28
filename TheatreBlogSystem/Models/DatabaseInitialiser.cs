@@ -12,11 +12,13 @@ namespace TheatreBlogSystem.Models
     {
         protected override void Seed(ApplicationDbContext context)
         {
+
             base.Seed(context);
 
             if (!context.Users.Any())
             {
 
+                //create roles
                 RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
 
                 if (!roleManager.RoleExists("Admin"))
@@ -28,23 +30,18 @@ namespace TheatreBlogSystem.Models
                     roleManager.Create(new IdentityRole("Staff"));
 
                 }
-                if (!roleManager.RoleExists("Manager"))
+                if (!roleManager.RoleExists("Moderator"))
                 {
-                    roleManager.Create(new IdentityRole("Manager"));
+                    roleManager.Create(new IdentityRole("Moderator"));
                 }
                 if (!roleManager.RoleExists("Customer"))
                 {
                     roleManager.Create(new IdentityRole("Customer"));
                 }
-                if (!roleManager.RoleExists("Suspended"))
-                {
-                    roleManager.Create(new IdentityRole("Suspended"));
-                }
 
                 context.SaveChanges();
 
                 //Create users
-
                 UserManager<User> userManager = new UserManager<User>(new UserStore<User>(context));
 
 
@@ -77,20 +74,20 @@ namespace TheatreBlogSystem.Models
                 }
 
 
-                //Create a manager
+                //Create a moderator
                 if (userManager.FindByName("manager@thelocaltheatre.com") == null)
                 {
                     var manager = new Staff
                     {
-                        UserName = "manager@thelocaltheatre.com",
-                        Email = "manager@thelocaltheatre.com",
+                        UserName = "Moderator@thelocaltheatre.com",
+                        Email = "Moderator@thelocaltheatre.com",
                         TimeOfRegistration = DateTime.Now,
                         EmailConfirmed = true,
                         DateOfBirth = DateTime.Parse("02/11/1999")
 
                     };
                     userManager.Create(manager, "manager");
-                    userManager.AddToRole(manager.Id, "Manager");
+                    userManager.AddToRole(manager.Id, "Moderator");
                 }
 
                 // Create staff.
@@ -210,46 +207,30 @@ namespace TheatreBlogSystem.Models
                     userManager.AddToRoles(gary.Id, "Customer");
                 }
 
-                //Create a few suspended customers
-                if (userManager.FindByName("bill@gmail.com") == null)
-                {
-                    var bill = new Customer
-                    {
-                        UserName = "bill@gmail.com",
-                        Email = "bill@gmail.com",
-                        TimeOfRegistration = DateTime.Now,
-                        EmailConfirmed = true,
-                        Forename = "Bill",
-                        Surname = "Black",
-                        IsSuspended = true,
-                        DateOfBirth = DateTime.Parse("02/11/1999")
-                    };
-                    userManager.Create(bill, "suspended1");
-                    userManager.AddToRoles(bill.Id, "Suspended");
-                }
-
-                if (userManager.FindByName("greg@gmail.com") == null)
-                {
-
-
-
-                    var greg = new Customer
-                    {
-                        UserName = "greg@gmail.com",
-                        Email = "greg@gmail.com",
-                        TimeOfRegistration = DateTime.Now,
-                        EmailConfirmed = true,
-                        Forename = "Greg",
-                        Surname = "Grey",
-                        IsSuspended = true,
-                        DateOfBirth = DateTime.Parse("02/11/1999")
-                    };
-                    userManager.Create(greg, "suspended2");
-                    userManager.AddToRoles(greg.Id, "Suspended");
-                }
-
                 //create categories
-                
+                Category Announcement = new Category
+                {
+                    Name = "Announcement"
+                };
+                context.Categories.Add(Announcement);
+
+                Category Comedy = new Category
+                {
+                    Name = "Comedy"
+                };
+                context.Categories.Add(Comedy);
+
+                Category Horror = new Category
+                {
+                    Name = "Horror"
+                };
+                context.Categories.Add(Horror);
+
+                Category Romance = new Category
+                {
+                    Name = "Romance"
+                };
+                context.Categories.Add(Romance);
 
                 context.SaveChanges();
             }

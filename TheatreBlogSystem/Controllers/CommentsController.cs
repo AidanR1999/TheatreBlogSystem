@@ -137,8 +137,7 @@ namespace TheatreBlogSystem.Controllers
         [HttpPost]
         public ActionResult MakeComment(string commentBody, int? postId)
         {
-            Comment comment = new Comment()
-                ;
+            Comment comment = new Comment();
             comment.Body = commentBody;
             comment.Date = DateTime.Now;
             comment.UserId = User.Identity.GetUserId();
@@ -159,6 +158,25 @@ namespace TheatreBlogSystem.Controllers
         public PartialViewResult _ViewComments(ICollection<Comment> comments)
         {
             return PartialView(comments);
+        }
+
+        public ActionResult ApproveComment(int? commentId)
+        {
+            if(commentId == null)
+                RedirectToAction("ViewPosts", "Posts");
+
+            ApplicationDbContext db = new ApplicationDbContext();
+            Comment comment = db.Comments.Find(commentId);
+
+            if(comment == null)
+                RedirectToAction("ViewPosts", "Posts");
+
+            comment.CommentIsApproved = true;
+
+            db.Entry(comment).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("PostDetails", "Posts", new { postId = comment.PostId });
         }
     }
 }

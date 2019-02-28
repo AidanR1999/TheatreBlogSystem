@@ -1,4 +1,4 @@
-﻿ @model dynamic
+﻿@model dynamic
 
 @{
     ViewBag.Title = "Admin";
@@ -12,33 +12,60 @@
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto">
                 <div class="site-heading">
-                    <h1>Administration</h1>
+                    <h1>System Management</h1>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-            <div class="post-preview">
-                <a href="@Html.Raw(Url.Action("Create", "Staff"))">
+@if (User.IsInRole("Staff") || User.IsInRole("Admin") || User.IsInRole("Moderator"))
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="post-preview">
                     <h2 class="post-title">
-                        Edit Staff
+                        <center>Blog</center>
                     </h2>
-                    <hr />
-                </a>
-                <a href="@Html.Raw(Url.Action("Create", "Staff"))">
-                    <h2 class="post-title">
-                        Test
-                    </h2>
-                    <hr />
-                </a>
+                    <a href="@Html.Raw(Url.Action("Create", "Posts"))">
+                        <h2 class="post-title">
+                            Create Post
+                        </h2>
+                        <hr />
+                    </a>
+                    <a href="@Html.Raw(Url.Action("Index", "Categories"))">
+                        <h2 class="post-title">
+                            Edit Categories
+                        </h2>
+                        <hr />
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-</div>
+}
+    <hr />
+@if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="post-preview">
+                    <h2 class="post-title">
+                        <center>Moderation</center>
+                    </h2>
+                    <a href="@Html.Raw(Url.Action("Index", "Users"))">
+                        <h2 class="post-title">
+                            Edit Users
+                        </h2>
+                        <hr />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 
 <!-- Bootstrap core JavaScript -->
 <script src="/Scripts/jquery-3.3.1.min.js"></script>

@@ -12,23 +12,30 @@
 
 @foreach (var comment in Model)
 {
-    <article>
-        <div class="container" style="max-width: 50px !important">
-            <div class="row">
-                <div class="col-lg-8 col-md-10 mx-auto">
-                    <div class="post-preview">
-                        <p >
-                            @comment.Body
-                        </p>
-                        <p class="post-meta">
-                            Posted by
-                            <a href="#">@comment.User.Forename @comment.User.Surname</a>
-                        </p>
+    if (comment.CommentIsApproved || User.IsInRole("Admin"))
+    {
+        <article>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-10 mx-auto">
+                        <div class="post-preview">
+                            <p >
+                                @comment.Body
+                            </p>
+                            <p class="post-meta">
+                                Posted by
+                                <a href="#">@comment.User.Forename @comment.User.Surname</a>
+                                @if (User.IsInRole("Admin") && !comment.CommentIsApproved)
+                                {
+                                    <b>@Html.ActionLink("Approve", "ApproveComment", new {commentId = comment.CommentId})</b>
+                                }
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </article>
+        </article>
+    }
 }
 
         <!-- Bootstrap core JavaScript -->

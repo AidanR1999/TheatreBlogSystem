@@ -18,33 +18,35 @@
     </div>
 </header>
 
-@using (Html.BeginForm("FilterByCategory", "Posts"))
-{
-    <right>
-        @{
-            List<SelectListItem> dropDownItems = new List<SelectListItem>();
-            dropDownItems.Add(new SelectListItem
-            {
-                Text = "All Post",
-                Value = "All Post"
-            });
-
-            foreach (var category in Model.Categories)
-            {
-
+<div class="container">
+    @using (Html.BeginForm("FilterByCategory", "Posts"))
+    {
+        <right>
+            @{
+                List<SelectListItem> dropDownItems = new List<SelectListItem>();
                 dropDownItems.Add(new SelectListItem
                 {
-                    Text = category.Name,
-                    Value = category.Name
+                    Text = "All Post",
+                    Value = "All Post"
                 });
+
+                foreach (var category in Model.Categories)
+                {
+
+                    dropDownItems.Add(new SelectListItem
+                    {
+                        Text = category.Name,
+                        Value = category.Name
+                    });
+                }
             }
-        }
 
-        @Html.DropDownList("filter", dropDownItems)
+            @Html.DropDownList("filter", dropDownItems)
 
-        <input type="submit" name="filter" value="Filter by Category"/>
-    </right>
-}
+            <input type="submit" name="filter" value="Filter by Category" />
+        </right>
+    }
+</div>
 
 
 @if (ViewBag.CategoryName.Equals("All Post"))
@@ -69,9 +71,17 @@
                                 Posted by
                                 <a href="#">@Post.Staff.Forename @Post.Staff.Surname</a>
                                 on @Post.DatePublished
-                                @if (User.IsInRole("Admin") && !Post.IsApproved)
+                                @if (User.IsInRole("Admin"))
                                 {
-                                    <b>@Html.ActionLink("Approve", "ApprovePost", new {postId = Post.PostId})</b>
+                                    if (!Post.IsApproved)
+                                    {
+                                        <b>@Html.ActionLink("Approve", "ApprovePost", new { postId = Post.PostId }) | </b>
+                                    }
+                                    else
+                                    {
+                                        <b>@Html.ActionLink("Disapprove", "DisapprovePost", new { postId = Post.PostId }) | </b>
+                                    }
+                                    <b>@Html.ActionLink("Delete", "Delete", new { id = Post.PostId })</b>
                                 }
                             </p>
                         </div>
@@ -105,9 +115,17 @@ else
                                     Posted by
                                     <a href="#">@Post.Staff.Forename @Post.Staff.Surname</a>
                                     on @Post.DatePublished
-                                    @if (User.IsInRole("Admin") && !Post.IsApproved)
+                                    @if (User.IsInRole("Admin"))
                                     {
-                                        <b>@Html.ActionLink("Approve", "ApprovePost", new {postId = Post.PostId})</b>
+                                        if (!Post.IsApproved)
+                                        {
+                                            <b>@Html.ActionLink("Approve", "ApprovePost", new { postId = Post.PostId }) | </b>
+                                        }
+                                        else
+                                        {
+                                            <b>@Html.ActionLink("Disapprove", "DisapprovePost", new { postId = Post.PostId }) | </b>
+                                        }
+                                        <b>@Html.ActionLink("Delete", "Delete", new { id = Post.PostId })</b>
                                     }
                                 </p>
                             </div>

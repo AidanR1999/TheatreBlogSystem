@@ -38,6 +38,10 @@ namespace TheatreBlogSystem.Models
                 {
                     roleManager.Create(new IdentityRole("Customer"));
                 }
+                if (!roleManager.RoleExists("Suspended"))
+                {
+                    roleManager.Create(new IdentityRole("Suspended"));
+                }
 
                 context.SaveChanges();
 
@@ -214,23 +218,17 @@ namespace TheatreBlogSystem.Models
                 };
                 context.Categories.Add(Announcement);
 
-                Category Comedy = new Category
+                Category Film = new Category
                 {
-                    Name = "Comedy"
+                    Name = "Film"
                 };
-                context.Categories.Add(Comedy);
+                context.Categories.Add(Film);
 
-                Category Horror = new Category
+                Category Play = new Category
                 {
-                    Name = "Horror"
+                    Name = "Play"
                 };
-                context.Categories.Add(Horror);
-
-                Category Romance = new Category
-                {
-                    Name = "Romance"
-                };
-                context.Categories.Add(Romance);
+                context.Categories.Add(Play);
 
                 context.SaveChanges();
             }

@@ -1,4 +1,5 @@
-﻿@using TheatreBlogSystem.Models
+﻿@using System.Diagnostics.Eventing.Reader
+@using TheatreBlogSystem.Models
 @model IEnumerable<TheatreBlogSystem.Models.User>
 
 @{
@@ -37,10 +38,13 @@
             @Html.DisplayNameFor(model => model.Surname)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DateOfBirth)
+            DoB
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TimeOfRegistration)
+            Registrated
+        </th>
+        <th>
+            Role
         </th>
     </tr>
 
@@ -62,14 +66,26 @@
             <td>
                 @Html.DisplayFor(modelItem => item.TimeOfRegistration)
             </td>
+            <th>
+                @Html.DisplayFor(modelItem => item.CurrentRole)
+            </th>
+
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                 @Html.ActionLink("Details", "Details", new { id = item.Id }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.Id }) |
-                @Html.ActionLink("Suspend", "Suspend", new { id = item.Id }) |
-                @if (User.IsInRole("Admin"))
+                @if (!item.CurrentRole.Equals("Suspended") && !item.CurrentRole.Equals("Admin"))
                 {
-                    @Html.ActionLink("Promote", "Promote", new {id = item.Id})
+                    @Html.ActionLink("Suspend", "UpdateRole", new { id = item.Id, newRole = "Suspended" })
+                }
+                else if(!item.CurrentRole.Equals("Admin"))
+                {
+                    @Html.ActionLink("Unsuspend", "UpdateRole", new { id = item.Id, newRole = "Customer" })
+                }
+                |
+                @if (User.IsInRole("Admin") && !item.CurrentRole.Equals("Admin") && !item.CurrentRole.Equals("Moderator"))
+                {
+                    @Html.ActionLink("Promote", "UpdateRole", new { id = item.Id, newRole = "Moderator" })
                 }
             </td>
         </tr>

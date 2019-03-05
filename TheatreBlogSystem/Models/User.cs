@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin;
 
 namespace TheatreBlogSystem.Models
 {
@@ -35,6 +38,23 @@ namespace TheatreBlogSystem.Models
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Add custom user claims here
             return userIdentity;
+        }
+
+        private ApplicationUserManager userManager;
+
+        [NotMapped]
+        public string CurrentRole
+        {
+            get
+            {
+                if (userManager == null)
+                {
+                    userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+
+                }
+
+                return userManager.GetRoles(Id).Single();
+            }
         }
 
     }

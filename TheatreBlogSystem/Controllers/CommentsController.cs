@@ -160,7 +160,7 @@ namespace TheatreBlogSystem.Controllers
             return PartialView(comments);
         }
 
-        public ActionResult ApproveComment(int? commentId)
+        public ActionResult ApproveComment(int? commentId, bool approved)
         {
             if(commentId == null)
                 RedirectToAction("ViewPosts", "Posts");
@@ -171,7 +171,7 @@ namespace TheatreBlogSystem.Controllers
             if(comment == null)
                 RedirectToAction("ViewPosts", "Posts");
 
-            comment.CommentIsApproved = true;
+            comment.CommentIsApproved = approved;
 
             db.Entry(comment).State = EntityState.Modified;
             db.SaveChanges();

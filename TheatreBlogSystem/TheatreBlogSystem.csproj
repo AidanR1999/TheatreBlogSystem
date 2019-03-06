@@ -221,7 +221,6 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\CategoriesViewModel.cs" />
     <Compile Include="ViewModels\PostsViewModel.cs" />
-    <Compile Include="ViewModels\UsersRolesViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />

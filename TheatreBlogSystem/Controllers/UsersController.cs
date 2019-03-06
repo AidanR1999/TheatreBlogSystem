@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using TheatreBlogSystem.Models;
+using WebGrease;
 
 namespace TheatreBlogSystem.Controllers
 {
@@ -58,12 +59,17 @@ namespace TheatreBlogSystem.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,TimeOfRegistration,Forename,Surname,DateOfBirth,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] User user)
+        public async Task<ActionResult> Create([Bind(Include = "Id,TimeOfRegistration,Forename,Surname,DateOfBirth,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] Staff user, string password, string userRole)
         {
-            if (ModelState.IsValid)
+            user.TimeOfRegistration = DateTime.Now;
+            var newUser = new Staff { UserName = user.Email, Email = user.Email, TimeOfRegistration = DateTime.Now, DateOfBirth = user.DateOfBirth, Forename = user.Forename, Surname = user.Surname };
+            var result = await UserManager.CreateAsync(newUser, password);
+
+            var userId = UserManager.FindByEmail(newUser.Email).Id;
+
+            if (result.Succeeded)
             {
-                db.Users.Add(user);
-                db.SaveChanges();
+                await UserManager.AddToRoleAsync(userId, userRole);
                 return RedirectToAction("Index");
             }
 
@@ -145,9 +151,7 @@ namespace TheatreBlogSystem.Controllers
         public async Task<ActionResult> UpdateRole(string id, string newRole, int? postId)
         {
             if (id == User.Identity.GetUserId() || newRole == null)
-            {
                 return RedirectToAction("Index", "Users");
-            }
 
             ApplicationDbContext db = ApplicationDbContext.Create();
 
@@ -155,21 +159,10 @@ namespace TheatreBlogSystem.Controllers
             string oldRole = (user.CurrentRole);
 
             if (oldRole != "Customer" && newRole == "Suspended")
-            {
                 return RedirectToAction("Index", "Users");
-            }
 
             await UserManager.RemoveFromRoleAsync(id, oldRole);
             await UserManager.AddToRoleAsync(id, newRole);
-
-
-            if (user.CurrentRole != "Suspended")
-            {
-                db.Database.ExecuteSqlCommand(
-                    "UPDATE AspNetUsers SET Discriminator={0} WHERE id={1}",
-                    user.CurrentRole == "Admin" ? "Staff" : user.CurrentRole,
-                    id);
-            }
 
             if (postId == null)
                 return RedirectToAction("Index", "Users");

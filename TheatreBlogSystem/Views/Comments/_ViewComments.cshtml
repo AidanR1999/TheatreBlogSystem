@@ -38,11 +38,11 @@
 
                                     if (comment.User.CurrentRole.Equals("Customer"))
                                     {
-                                        @Html.ActionLink("Suspend", "UpdateRole", "Users", new { id = comment.UserId, newRole = "Suspended", postId = comment.PostId }, null)
+                                        <b>@Html.ActionLink("Suspend", "UpdateRole", "Users", new { id = comment.UserId, newRole = "Suspended", postId = comment.PostId }, null)</b>
                                     }
-                                    else if(comment.User.CurrentRole.Equals("Suspended"))
+                                    else if (comment.User.CurrentRole.Equals("Suspended"))
                                     {
-                                        @Html.ActionLink("Unsuspend", "UpdateRole", "Users", new { id = comment.UserId, newRole = "Customer", postId = comment.PostId }, null)
+                                        <b>@Html.ActionLink("Unsuspend", "UpdateRole", "Users", new { id = comment.UserId, newRole = "Customer", postId = comment.PostId }, null)</b>
                                     }
                                 }
                             </p>

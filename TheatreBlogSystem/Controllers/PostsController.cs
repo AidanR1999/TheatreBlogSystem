@@ -37,30 +37,11 @@ namespace TheatreBlogSystem.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PostId,Title,Body,IsApproved,DatePublished,StaffId,CategoryId")] Post post, HttpPostedFileBase fileUpload)
+        public ActionResult Create([Bind(Include = "PostId,Title,Body,IsApproved,DatePublished,StaffId,CategoryId")] Post post)
         {
             post.IsApproved = false;
             post.DatePublished = DateTime.Now;
             post.StaffId = User.Identity.GetUserId();
-
-            if (fileUpload != null)
-            {
-                string pic = System.IO.Path.GetFileName(fileUpload.FileName);
-                string path = System.IO.Path.Combine(
-                    Server.MapPath("~/images/posts"), pic);
-                // file is uploaded
-                fileUpload.SaveAs(path);
-                post.ImageLink = path;
-
-                // save the image path path to the database or you can send image 
-                // directly to database
-                // in-case if you want to store byte[] ie. for DB
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    fileUpload.InputStream.CopyTo(ms);
-                    byte[] array = ms.GetBuffer();
-                }
-            }
 
             if (ModelState.IsValid)
             {

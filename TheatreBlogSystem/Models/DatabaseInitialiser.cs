@@ -28,7 +28,6 @@ namespace TheatreBlogSystem.Models
                 if (!roleManager.RoleExists("Staff"))
                 {
                     roleManager.Create(new IdentityRole("Staff"));
-
                 }
                 if (!roleManager.RoleExists("Moderator"))
                 {
@@ -50,7 +49,7 @@ namespace TheatreBlogSystem.Models
 
 
                 //Create an Admin
-                if (userManager.FindByName("admin@thelocaltheatre.com") == null)
+                if (userManager.FindByName("theatreadmin@thelocaltheatre.com") == null)
                 {
                     // Super liberal password validation for password for seeds
                     userManager.PasswordValidator = new PasswordValidator
@@ -64,10 +63,10 @@ namespace TheatreBlogSystem.Models
 
                     var administrator = new Staff
                     {
-                        Forename = "Admin",
-                        Surname = "Man",
-                        UserName = "admin@thelocaltheatre.com",
-                        Email = "admin@thelocaltheatre.com",
+                        Forename = "Aidan",
+                        Surname = "Rooney",
+                        UserName = "theatreadmin@thelocaltheatre.com",
+                        Email = "theatreadmin@thelocaltheatre.com",
                         TimeOfRegistration = DateTime.Now,
                         EmailConfirmed = true,
                         DateOfBirth = DateTime.Parse("02/11/1999")
@@ -79,139 +78,115 @@ namespace TheatreBlogSystem.Models
 
 
                 //Create a moderator
-                if (userManager.FindByName("manager@thelocaltheatre.com") == null)
+                if (userManager.FindByName("theatremod@thelocaltheatre.com") == null)
                 {
-                    var manager = new Staff
+                    var mod = new Staff
                     {
-                        UserName = "Moderator@thelocaltheatre.com",
-                        Email = "Moderator@thelocaltheatre.com",
+                        Forename = "Mike",
+                        Surname = "Gunn",
+                        UserName = "theatremod@thelocaltheatre.com",
+                        Email = "theatremod@thelocaltheatre.com",
                         TimeOfRegistration = DateTime.Now,
                         EmailConfirmed = true,
-                        DateOfBirth = DateTime.Parse("02/11/1999")
+                        DateOfBirth = DateTime.Parse("31/5/1995")
 
                     };
-                    userManager.Create(manager, "manager");
-                    userManager.AddToRole(manager.Id, "Moderator");
+                    userManager.Create(mod, "mod123");
+                    userManager.AddToRole(mod.Id, "Moderator");
                 }
 
                 // Create staff.
-                if (userManager.FindByName("jeff@thelocaltheatre.com") == null)
+                if (userManager.FindByName("danny@thelocaltheatre.com") == null)
                 {
 
-                    var jeff = new Staff
+                    var staff1 = new Staff
                     {
-                        UserName = "jeff@thelocaltheatre.com",
-                        Email = "jeff@thelocaltheatre.com",
+                        Forename = "Danny",
+                        Surname = "Carswell",
+                        UserName = "danny@thelocaltheatre.com",
+                        Email = "danny@thelocaltheatre.com",
                         TimeOfRegistration = DateTime.Now,
                         EmailConfirmed = true,
-                        DateOfBirth = DateTime.Parse("02/11/1999")
+                        DateOfBirth = DateTime.Parse("19/03/1999")
                     };
 
-                    userManager.Create(jeff, "staff1");
-                    userManager.AddToRoles(jeff.Id, "Staff");
+                    userManager.Create(staff1, "staff1");
+                    userManager.AddToRoles(staff1.Id, "Staff");
                 }
 
-                if (userManager.FindByName("xander@thelocaltheatre.com") == null)
+                if (userManager.FindByName("jamie@thelocaltheatre.com") == null)
                 {
-                    var alex = new Staff
+                    var staff2 = new Staff
                     {
-                        UserName = "xander@thelocaltheatre.com",
-                        Email = "xander@thelocaltheatre.com",
+                        Forename = "Jamie",
+                        Surname = "Lawn",
+                        UserName = "jamie@thelocaltheatre.com",
+                        Email = "jamie@thelocaltheatre.com",
                         TimeOfRegistration = DateTime.Now,
                         EmailConfirmed = true,
-                        DateOfBirth = DateTime.Parse("02/11/1999")
+                        DateOfBirth = DateTime.Parse("28/09/1990")
                     };
-                    userManager.Create(alex, "staff2");
-                    userManager.AddToRoles(alex.Id, "Staff");
+                    userManager.Create(staff2, "staff2");
+                    userManager.AddToRoles(staff2.Id, "Staff");
                 }
 
-                if (userManager.FindByName("paul@thelocaltheatre.com") == null)
-                {
-                    var paul = new Staff
-                    {
-                        Forename = "Paul",
-                        Surname = "Senior",
-                        UserName = "Paul",
-                        Email = "paul@thelocaltheatre.com",
-                        TimeOfRegistration = DateTime.Now,
-                        EmailConfirmed = true,
-                        DateOfBirth = DateTime.Parse("02/11/1999")
-                    };
-                    userManager.Create(paul, "staff3");
-                    userManager.AddToRoles(paul.Id, "Staff");
-                }
 
                 //Create Customers
-                if (userManager.FindByName("bill@gmail.com") == null)
+                if (userManager.FindByName("Mork@gmail.com") == null)
                 {
-                    var customer = new Customer
+                    var customer1 = new Customer
                     {
-                        UserName = "bill@gmail.com",
-                        Email = "bill@gmail.com",
-                        Forename = "Billy",
-                        Surname = "Crow",
+                        Forename = "Mork",
+                        Surname = "McNulty",
+                        UserName = "Mork@gmail.com",
+                        Email = "Mork@gmail.com",
                         TimeOfRegistration = DateTime.Now,
                         EmailConfirmed = true,
                         IsSuspended = false,
-                        DateOfBirth = DateTime.Parse("02/11/1999")
+                        DateOfBirth = DateTime.Parse("10/06/1994")
 
                     };
-                    userManager.Create(customer, "customer1");
-                    userManager.AddToRole(customer.Id, "Customer");
+                    userManager.Create(customer1, "customer1");
+                    userManager.AddToRole(customer1.Id, "Customer");
                 }
 
 
-                if (userManager.FindByName("bob@gmail.com") == null)
+                if (userManager.FindByName("Ewan@gmail.com") == null)
                 {
-                    var bob = new Customer
+                    var customer2 = new Customer
                     {
-                        UserName = "bob@gmail.com",
-                        Email = "bob@gmail.com",
+                        Forename = "Ewan",
+                        Surname = "MacPhearson",
+                        UserName = "Ewan@gmail.com",
+                        Email = "Ewan@gmail.com",
                         TimeOfRegistration = DateTime.Now,
                         EmailConfirmed = true,
-                        Forename = "Bob",
-                        Surname = "Williams",
                         IsSuspended = false,
-                        DateOfBirth = DateTime.Parse("02/11/1999")
+                        DateOfBirth = DateTime.Parse("17/07/1998")
                     };
-                    userManager.Create(bob, "customer2");
-                    userManager.AddToRoles(bob.Id, "Customer");
+                    userManager.Create(customer2, "customer2");
+                    userManager.AddToRoles(customer2.Id, "Customer");
                 }
 
-                if (userManager.FindByName("steveb@gmail.com") == null)
+                //Create Suspended
+                if (userManager.FindByName("div@gmail.com") == null)
                 {
-                    var steve = new Customer
+                    var suspended1 = new Customer
                     {
-                        UserName = "Steve",
-                        Email = "steveb@gmail.com",
-                        EmailConfirmed = true,
-                        Forename = "Steve",
-                        Surname = "Fist",
-                        TimeOfRegistration = DateTime.Now,
-                        IsSuspended = false,
-                        DateOfBirth = DateTime.Parse("02/11/1999")
-                    };
-                    userManager.Create(steve, "customer3");
-                    userManager.AddToRoles(steve.Id, "Customer");
-                }
-                if (userManager.FindByName("gary@gmail.com") == null)
-                {
-                    var gary = new Customer
-                    {
-                        UserName = "gary@gmail.com",
-                        Email = "gary@gmail.com",
+                        Forename = "Div",
+                        Surname = "Campbell",
+                        UserName = "div@gmail.com",
+                        Email = "div@gmail.com",
                         TimeOfRegistration = DateTime.Now,
                         EmailConfirmed = true,
-                        Forename = "Garry",
-                        Surname = "Hugh",
-                        IsSuspended = false,
-                        DateOfBirth = DateTime.Parse("02/11/1999")
+                        IsSuspended = true,
+                        DateOfBirth = DateTime.Parse("26/05/1992")
                     };
-                    userManager.Create(gary, "customer4");
-                    userManager.AddToRoles(gary.Id, "Customer");
+                    userManager.Create(suspended1, "suspended1");
+                    userManager.AddToRoles(suspended1.Id, "Suspended");
                 }
 
-                //create categories
+                //Create Categories
                 Category Announcement = new Category
                 {
                     Name = "Announcement"
@@ -220,25 +195,108 @@ namespace TheatreBlogSystem.Models
 
                 Category Film = new Category
                 {
-                    Name = "Film"
+                    Name = "Film Review"
                 };
                 context.Categories.Add(Film);
 
                 Category Play = new Category
                 {
-                    Name = "Play"
+                    Name = "Play Review"
                 };
                 context.Categories.Add(Play);
 
+                
+                //Create Posts
+                //announcements
+                Post Announcement1 = new Post
+                {
+                    Title = "Proin iaculis, tellus sed feugiat feugiat",
+                    Body = "Lectus urna sollicitudin turpis, molestie molestie mauris nisi vitae enim. Sed tempor nibh tortor, ut pretium diam hendrerit eu. Pellentesque porttitor a est ut ultricies. Nam ullamcorper tempor urna, non gravida velit rhoncus in. Pellentesque bibendum, orci sed faucibus vestibulum, nibh lectus aliquam sem, tempor aliquam felis libero eget risus. Praesent non tincidunt ipsum. Sed sollicitudin lacinia porta. Ut tincidunt rhoncus dui, at iaculis ligula ornare vitae. In ut tortor condimentum tortor finibus consectetur sed blandit metus. Vestibulum ultricies interdum ex sit amet placerat. Nam ullamcorper est vel lorem aliquam auctor.",
+                    IsApproved = true,
+                    DatePublished = DateTime.Now,
+                    ImageLink = "/Content/img/architecture-auditorium-chairs-109669.jpg",
+                    CategoryId = 1,
+                    StaffId = userManager.FindByEmail("jamie@thelocaltheatre.com").Id
+                };
+                context.Posts.Add(Announcement1);
+
+                Post Announcement2 = new Post
+                {
+                    Title = "Suspendisse non finibus erat",
+                    Body = "Praesent pharetra nisl id diam pharetra condimentum. Donec metus nisl, viverra at commodo eget, interdum eu mauris. Maecenas posuere elit nec magna aliquet, in dapibus sapien pharetra. Maecenas non vulputate urna. Nam volutpat justo eu dictum scelerisque. Etiam convallis lectus nec arcu tempus, lacinia volutpat dolor finibus. Quisque eget ultrices velit. Morbi interdum tincidunt justo eu convallis. Curabitur sit amet lectus metus. Nam eu pulvinar felis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. ",
+                    IsApproved = true,
+                    DatePublished = DateTime.Now,
+                    ImageLink = "/Content/img/architecture-auditorium-chairs-109669.jpg",
+                    CategoryId = 1,
+                    StaffId = userManager.FindByEmail("theatremod@thelocaltheatre.com").Id
+                };
+                context.Posts.Add(Announcement2);
+
+                //film reviews
+                Post film1 = new Post
+                {
+                    Title = "Nullam mi lacus",
+                    Body = "Rhoncus quis egestas id, egestas a purus. Pellentesque tincidunt libero nec tempor lobortis. Suspendisse potenti. Sed sit amet lectus ornare, posuere magna ac, tempus risus. Etiam placerat luctus libero id consequat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed auctor tristique consectetur. Vivamus cursus urna nec hendrerit semper. Praesent congue lorem porttitor nisi placerat sodales. Vivamus ac eros arcu. Morbi commodo sapien et nisi blandit, in elementum nunc aliquam. Donec in risus porta, efficitur orci nec, malesuada orci. Nulla efficitur id erat et luctus. ",
+                    IsApproved = true,
+                    DatePublished = DateTime.Now,
+                    ImageLink = "/Content/img/architecture-auditorium-chairs-109669.jpg",
+                    CategoryId = 2,
+                    StaffId = userManager.FindByEmail("jamie@thelocaltheatre.com").Id
+                };
+                context.Posts.Add(film1);
+
+                //play reviews
+                Post play1 = new Post
+                {
+                    Title = "Sed consequat",
+                    Body = "Enim quis rhoncus hendrerit, sem quam tincidunt nisl, ut sollicitudin est tellus sed libero. Ut elementum tincidunt sem feugiat iaculis. Fusce dapibus odio eget neque accumsan, quis suscipit nunc rutrum. Nullam id sagittis enim, id malesuada turpis. Donec ipsum dui, volutpat in magna quis, tempus condimentum nulla. Aenean non nisl faucibus, laoreet erat laoreet, bibendum orci. Pellentesque ac neque vitae ligula efficitur feugiat. Vivamus luctus sit amet massa ut dictum. Donec facilisis diam vel mi fermentum lacinia. Nam eu enim vel mi congue pretium ac ac mauris. Nulla nec arcu cursus, pretium metus eu, suscipit leo. Sed bibendum ipsum metus, et scelerisque magna lobortis ut. ",
+                    IsApproved = true,
+                    DatePublished = DateTime.Now,
+                    ImageLink = "/Content/img/architecture-auditorium-chairs-109669.jpg",
+                    CategoryId = 3,
+                    StaffId = userManager.FindByEmail("jamie@thelocaltheatre.com").Id
+                };
+                context.Posts.Add(play1);
+
+                Post play2 = new Post
+                {
+                    Title = "Nunc posuere arcu lectus",
+                    Body = "Quis cursus nisi egestas non. Integer non mauris placerat quam semper condimentum. Proin dapibus ut sapien et ultricies. Suspendisse pulvinar orci quam. Sed a venenatis purus, ut consequat libero. Donec tincidunt, massa accumsan pulvinar dictum, nunc libero feugiat erat, id porta nisi enim eget turpis. Nullam eu lacus elementum tortor pretium congue id sagittis nibh. Vivamus a egestas nisi. Donec maximus lacus leo. ",
+                    IsApproved = true,
+                    DatePublished = DateTime.Now,
+                    ImageLink = "/Content/img/architecture-auditorium-chairs-109669.jpg",
+                    CategoryId = 3,
+                    StaffId = userManager.FindByEmail("danny@thelocaltheatre.com").Id
+                };
+                context.Posts.Add(play2);
+
+                //non-approved posts
+                Post nonapproved1 = new Post
+                {
+                    Title = "Vestibulum id est nibh",
+                    Body = "Nam cursus justo quis fermentum aliquet. Etiam mollis tempor hendrerit. Nullam auctor sed eros ut varius. Sed pellentesque erat nibh. Cras sed mattis velit. Etiam tempor, ex sit amet maximus tincidunt, lectus ante molestie libero, ultricies lacinia dui tellus vitae nunc. ",
+                    IsApproved = false,
+                    DatePublished = DateTime.Now,
+                    ImageLink = "/Content/img/architecture-auditorium-chairs-109669.jpg",
+                    CategoryId = 2,
+                    StaffId = userManager.FindByEmail("danny@thelocaltheatre.com").Id
+                };
+                context.Posts.Add(nonapproved1);
+
+                Post nonapproved2 = new Post
+                {
+                    Title = "Cras vehicula vestibulum luctus",
+                    Body = "Vivamus eleifend iaculis nunc at auctor. Maecenas tincidunt porta risus commodo finibus. Morbi dignissim tempus ex, sed euismod quam efficitur a. Mauris ante massa, bibendum eget tincidunt sit amet, semper eget metus. Sed eu molestie purus. Morbi rutrum ultrices fringilla. Aliquam viverra felis interdum felis blandit placerat. Nullam commodo dolor sit amet metus luctus semper. Morbi at mauris rhoncus, venenatis ipsum cursus, pretium felis. ",
+                    IsApproved = false,
+                    DatePublished = DateTime.Now,
+                    ImageLink = "/Content/img/architecture-auditorium-chairs-109669.jpg",
+                    CategoryId = 1,
+                    StaffId = userManager.FindByEmail("jamie@thelocaltheatre.com").Id
+                };
+                context.Posts.Add(nonapproved2);
+
                 context.SaveChanges();
             }
-
-           // context.SaveChanges();
-
-
-            
-
-
 
         }//end method
 

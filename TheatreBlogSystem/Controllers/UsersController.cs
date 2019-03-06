@@ -28,12 +28,23 @@ namespace TheatreBlogSystem.Controllers
         }
 
         // GET: Users
+        /// <summary>
+        /// load the users index page, only admins and mods can access
+        /// </summary>
+        /// <returns>User Index Page</returns>
+        [Authorize(Roles = "Admin, Moderator")]
         public ActionResult Index()
         {
             return View(db.Users.ToList());
         }
 
         // GET: Users/Details/5
+        /// <summary>
+        /// show details of the selected user
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>User Details Page</returns>
+        [Authorize(Roles = "Admin, Moderator")]
         public ActionResult Details(string id)
         {
             if (id == null)
@@ -49,16 +60,27 @@ namespace TheatreBlogSystem.Controllers
         }
 
         // GET: Users/Create
+        /// <summary>
+        /// load the create user page
+        /// </summary>
+        /// <returns>Create User Page</returns>
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
         }
 
         // POST: Users/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// get the details entered from the create user page and add the new user to the database
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="password"></param>
+        /// <param name="userRole"></param>
+        /// <returns>User Index Page</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Create([Bind(Include = "Id,TimeOfRegistration,Forename,Surname,DateOfBirth,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] Staff user, string password, string userRole)
         {
             user.TimeOfRegistration = DateTime.Now;
@@ -76,38 +98,13 @@ namespace TheatreBlogSystem.Controllers
             return View(user);
         }
 
-        // GET: Users/Edit/5
-        public ActionResult Edit(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            User user = db.Users.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(user);
-        }
-
-        // POST: Users/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,TimeOfRegistration,Forename,Surname,DateOfBirth,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] User user)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(user);
-        }
-
         // GET: Users/Delete/5
+        /// <summary>
+        /// loads the delete user page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Delete User Page</returns>
+        [Authorize(Roles = "Admin, Moderator")]
         public ActionResult Delete(string id)
         {
             if (id == null)
@@ -123,6 +120,12 @@ namespace TheatreBlogSystem.Controllers
         }
 
         // POST: Users/Delete/5
+        /// <summary>
+        /// delete the selected user from the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>User Index Page</returns>
+        [Authorize(Roles = "Admin, Moderator")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
@@ -142,12 +145,14 @@ namespace TheatreBlogSystem.Controllers
             base.Dispose(disposing);
         }
 
-
-        /*
-         *
-         *Suspension of customers
-         */
-         
+        /// <summary>
+        /// allows the admin to promote, suspend and unsuspend users
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="newRole"></param>
+        /// <param name="postId"></param>
+        /// <returns>User Index Page</returns>
+        [Authorize(Roles = "Admin, Moderator")]
         public async Task<ActionResult> UpdateRole(string id, string newRole, int? postId)
         {
             if (id == User.Identity.GetUserId() || newRole == null)
@@ -169,39 +174,5 @@ namespace TheatreBlogSystem.Controllers
 
             return RedirectToAction("PostDetails", "Posts", new { postId = postId });
         }
-        
-        /*public async Task<ActionResult> Unsuspend(string id)
-        {
-            if (id == User.Identity.GetUserId())
-            {
-                return RedirectToAction("Index", "Users");
-            }
-
-            ApplicationDbContext db = ApplicationDbContext.Create();
-
-            User user = db.Users.Find(id);
-            string oldRole = (user.CurrentRole);
-
-            if (oldRole != "Suspended")
-            {
-                return RedirectToAction("Index", "Users");
-            }
-
-            await UserManager.RemoveFromRoleAsync(id, oldRole);
-            await UserManager.AddToRoleAsync(id, "Customer");
-
-
-            if (user.CurrentRole != "Suspended")
-            {
-                db.Database.ExecuteSqlCommand(
-                    "UPDATE AspNetUsers SET Discriminator={0} WHERE id={1}",
-                    user.CurrentRole == "Admin" ? "Staff" : user.CurrentRole,
-                    id);
-            }
-
-            return RedirectToAction("Index");
-        }*/
-
-
     }
 }

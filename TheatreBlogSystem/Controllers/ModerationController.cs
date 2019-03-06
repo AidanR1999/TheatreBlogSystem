@@ -10,6 +10,7 @@ namespace TheatreBlogSystem.Controllers
     public class ModerationController : Controller
     {
         // GET: Admin
+        [Authorize(Roles = "Admin, Moderator, Staff")]
         public ActionResult Index()
         {
             return View();

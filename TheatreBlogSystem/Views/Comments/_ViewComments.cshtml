@@ -12,7 +12,7 @@
 
 @foreach (var comment in Model)
 {
-    if (comment.CommentIsApproved || User.IsInRole("Admin"))
+    if (comment.CommentIsApproved || User.IsInRole("Admin") || User.IsInRole("Moderator"))
     {
         <article>
             <div class="container">
@@ -25,7 +25,7 @@
                             <p class="post-meta">
                                 Posted by
                                 <a href="#">@comment.User.Forename @comment.User.Surname</a>
-                                @if (User.IsInRole("Admin"))
+                                @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
                                 {
                                     if (!comment.CommentIsApproved)
                                     {
@@ -35,7 +35,7 @@
                                     {
                                         <b>@Html.ActionLink("Disapprove", "ApproveComment", new { commentId = comment.CommentId, approved = false }) |</b>
                                     }
-
+                                    <b>@Html.ActionLink("Delete", "DeleteConfirmed", new { Id = comment.CommentId }) |</b>
                                     if (comment.User.CurrentRole.Equals("Customer"))
                                     {
                                         <b>@Html.ActionLink("Suspend", "UpdateRole", "Users", new { id = comment.UserId, newRole = "Suspended", postId = comment.PostId }, null)</b>

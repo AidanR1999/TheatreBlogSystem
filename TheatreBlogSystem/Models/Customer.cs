@@ -11,6 +11,5 @@ namespace TheatreBlogSystem.Models
     public class Customer : User
     {
         public bool IsSuspended { get; set; }
-
     }
 }

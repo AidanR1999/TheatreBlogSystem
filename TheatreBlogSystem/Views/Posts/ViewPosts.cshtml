@@ -53,7 +53,7 @@
 {
     foreach (var Post in Model.Posts)
     {
-        if (Post.IsApproved || User.IsInRole("Admin"))
+        if (Post.IsApproved || User.IsInRole("Admin") || User.IsInRole("Moderator"))
         {
             <div class="container">
                 <div class="row">
@@ -71,7 +71,7 @@
                                 Posted by
                                 <a href="#">@Post.Staff.Forename @Post.Staff.Surname</a>
                                 on @Post.DatePublished
-                                @if (User.IsInRole("Admin"))
+                                @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
                                 {
                                     if (!Post.IsApproved)
                                     {
@@ -81,7 +81,9 @@
                                     {
                                         <b>@Html.ActionLink("Disapprove", "DisapprovePost", new { postId = Post.PostId }) | </b>
                                     }
+                                    <b>@Html.ActionLink("Edit", "Edit", new { id = Post.PostId }) | </b>
                                     <b>@Html.ActionLink("Delete", "Delete", new { id = Post.PostId })</b>
+
                                 }
                             </p>
                         </div>
@@ -95,7 +97,7 @@ else
 {
     foreach (var Post in Model.Posts)
     {
-        if (Post.IsApproved || User.IsInRole("Admin"))
+        if (Post.IsApproved || User.IsInRole("Admin") || User.IsInRole("Moderator"))
         {
             if (ViewBag.CategoryName.Equals(Post.Category.Name))
             {
@@ -115,7 +117,7 @@ else
                                     Posted by
                                     <a href="#">@Post.Staff.Forename @Post.Staff.Surname</a>
                                     on @Post.DatePublished
-                                    @if (User.IsInRole("Admin"))
+                                    @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
                                     {
                                         if (!Post.IsApproved)
                                         {
@@ -125,6 +127,7 @@ else
                                         {
                                             <b>@Html.ActionLink("Disapprove", "DisapprovePost", new { postId = Post.PostId }) | </b>
                                         }
+                                        <b>@Html.ActionLink("Edit", "Edit", new { id = Post.PostId }) |</b>
                                         <b>@Html.ActionLink("Delete", "Delete", new { id = Post.PostId })</b>
                                     }
                                 </p>

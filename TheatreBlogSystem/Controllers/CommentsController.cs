@@ -16,6 +16,7 @@ namespace TheatreBlogSystem.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Comments
+        [Authorize(Roles = "Admin, Moderator")]
         public ActionResult Index()
         {
             var comments = db.Comments.Include(c => c.Post).Include(c => c.User);
@@ -23,6 +24,7 @@ namespace TheatreBlogSystem.Controllers
         }
 
         // GET: Comments/Details/5
+        [Authorize(Roles = "Admin, Moderator")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -38,6 +40,7 @@ namespace TheatreBlogSystem.Controllers
         }
 
         // GET: Comments/Create
+        [Authorize(Roles = "Admin, Moderator, Staff, Customer")]
         public ActionResult Create()
         {
             ViewBag.PostId = new SelectList(db.Posts, "PostId", "Title");
@@ -48,6 +51,7 @@ namespace TheatreBlogSystem.Controllers
         // POST: Comments/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin, Moderator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "CommentId,Date,Body,UserId,PostId")] Comment comment)
@@ -65,6 +69,7 @@ namespace TheatreBlogSystem.Controllers
         }
 
         // GET: Comments/Edit/5
+        [Authorize(Roles = "Admin, Moderator")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -84,6 +89,7 @@ namespace TheatreBlogSystem.Controllers
         // POST: Comments/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin, Moderator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "CommentId,Date,Body,UserId,PostId")] Comment comment)
@@ -100,29 +106,13 @@ namespace TheatreBlogSystem.Controllers
         }
 
         // GET: Comments/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Comment comment = db.Comments.Find(id);
-            if (comment == null)
-            {
-                return HttpNotFound();
-            }
-            return View(comment);
-        }
-
-        // POST: Comments/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Moderator")]
         public ActionResult DeleteConfirmed(int id)
         {
             Comment comment = db.Comments.Find(id);
             db.Comments.Remove(comment);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("ViewPosts", "Posts", null);
         }
 
         protected override void Dispose(bool disposing)
@@ -134,6 +124,7 @@ namespace TheatreBlogSystem.Controllers
             base.Dispose(disposing);
         }
 
+        [Authorize(Roles = "Admin, Moderator, Staff, Customer")]
         [HttpPost]
         public ActionResult MakeComment(string commentBody, int? postId)
         {
@@ -160,6 +151,7 @@ namespace TheatreBlogSystem.Controllers
             return PartialView(comments);
         }
 
+        [Authorize(Roles = "Admin, Moderator")]
         public ActionResult ApproveComment(int? commentId, bool approved)
         {
             if(commentId == null)

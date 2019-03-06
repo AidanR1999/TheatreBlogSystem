@@ -18,6 +18,11 @@ namespace TheatreBlogSystem.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Posts
+        /// <summary>
+        /// loads the posts index page, inaccessible from normal interaction 
+        /// </summary>
+        /// <returns>Post Index Page</returns>
+        [Authorize(Roles = "Admin, Moderator")]
         public ActionResult Index()
         {
             var posts = db.Posts.Include(p => p.Category).Include(p => p.Staff);
@@ -25,6 +30,11 @@ namespace TheatreBlogSystem.Controllers
         }
 
         // GET: Posts/Create
+        /// <summary>
+        /// loads the create post page
+        /// </summary>
+        /// <returns>Create post page</returns>
+        [Authorize(Roles = "Admin, Moderator, Staff")]
         public ActionResult Create()
         {
             ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name");
@@ -33,12 +43,17 @@ namespace TheatreBlogSystem.Controllers
         }
 
         // POST: Posts/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// gets the data from the create posts page and adds the post to the database
+        /// </summary>
+        /// <param name="post"></param>
+        /// <returns>View Posts Page</returns>
+        [Authorize(Roles = "Admin, Moderator, Staff")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "PostId,Title,Body,IsApproved,DatePublished,StaffId,CategoryId")] Post post)
         {
+            post.ImageLink = "/Content/img/architecture-auditorium-chairs-109669.jpg";
             post.IsApproved = false;
             post.DatePublished = DateTime.Now;
             post.StaffId = User.Identity.GetUserId();
@@ -56,6 +71,12 @@ namespace TheatreBlogSystem.Controllers
         }
 
         // GET: Posts/Edit/5
+        /// <summary>
+        /// load the edit post page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Edit post page</returns>
+        [Authorize(Roles = "Admin, Moderator")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -73,24 +94,36 @@ namespace TheatreBlogSystem.Controllers
         }
 
         // POST: Posts/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// gets the data from the edit posts page and updates the post in the database with the new information
+        /// </summary>
+        /// <param name="post"></param>
+        /// <returns>View Posts Page</returns>
+        [Authorize(Roles = "Admin, Moderator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "PostId,Title,Body,IsApproved,DatePublished,ImageLink,StaffId,CategoryId")] Post post)
         {
+            post.IsApproved = false;
+
             if (ModelState.IsValid)
             {
                 db.Entry(post).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("ViewPosts");
             }
             ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name", post.CategoryId);
             ViewBag.StaffId = new SelectList(db.Users, "Id", "Forename", post.StaffId);
-            return View(post);
+            return RedirectToAction("Edit");
         }
 
         // GET: Posts/Delete/5
+        /// <summary>
+        /// loads the delete post page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Delete Posts Page</returns>
+        [Authorize(Roles = "Admin, Moderator")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -106,6 +139,12 @@ namespace TheatreBlogSystem.Controllers
         }
 
         // POST: Posts/Delete/5
+        /// <summary>
+        /// removes the post from the database, including all comments
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>View Posts Page</returns>
+        [Authorize(Roles = "Admin, Moderator")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -113,7 +152,7 @@ namespace TheatreBlogSystem.Controllers
             Post post = db.Posts.Find(id);
             db.Posts.Remove(post);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("ViewPosts");
         }
 
         protected override void Dispose(bool disposing)
@@ -126,6 +165,11 @@ namespace TheatreBlogSystem.Controllers
         }
 
         //GET: ViewPosts
+        /// <summary>
+        /// displays the posts to the user
+        /// </summary>
+        /// <param name="categoryName"></param>
+        /// <returns>View Posts Page</returns>
         public ActionResult ViewPosts(string categoryName)
         {
             ApplicationDbContext db = ApplicationDbContext.Create();
@@ -146,6 +190,11 @@ namespace TheatreBlogSystem.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// gets the selected post and loads the details of the post
+        /// </summary>
+        /// <param name="postId"></param>
+        /// <returns>Post Details Page</returns>
         public ActionResult PostDetails(int? postId)
         {
             Post model = new Post();
@@ -166,7 +215,13 @@ namespace TheatreBlogSystem.Controllers
 
             return View(model);
         }
-
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="postId"></param>
+        /// <param name="comment"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult PostDetails(int? postId, string comment)
         {
@@ -206,6 +261,7 @@ namespace TheatreBlogSystem.Controllers
             return RedirectToAction("ViewPosts", "Posts", new { categoryName = filter });
         }
 
+        [Authorize(Roles = "Admin, Moderator")]
         public ActionResult ApprovePost(int? postId)
         {
             if(postId == null)
@@ -225,6 +281,7 @@ namespace TheatreBlogSystem.Controllers
             return RedirectToAction("ViewPosts", "Posts");
         }
 
+        [Authorize(Roles = "Admin, Moderator")]
         public ActionResult DisapprovePost(int? postId)
         {
             if (postId == null)

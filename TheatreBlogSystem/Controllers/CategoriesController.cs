@@ -16,12 +16,14 @@ namespace TheatreBlogSystem.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Categories
+        [Authorize(Roles = "Admin, Moderator, Staff")]
         public ActionResult Index()
         {
             return View(db.Categories.ToList());
         }
 
         // GET: Categories/Details/5
+        [Authorize(Roles = "Admin, Moderator, Staff")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -37,6 +39,7 @@ namespace TheatreBlogSystem.Controllers
         }
 
         // GET: Categories/Create
+        [Authorize(Roles = "Admin, Moderator, Staff")]
         public ActionResult Create()
         {
             return View();
@@ -45,6 +48,7 @@ namespace TheatreBlogSystem.Controllers
         // POST: Categories/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin, Moderator, Staff")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "CategoryId,Name")] Category category)
@@ -60,6 +64,7 @@ namespace TheatreBlogSystem.Controllers
         }
 
         // GET: Categories/Edit/5
+        [Authorize(Roles = "Admin, Moderator, Staff")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -77,6 +82,7 @@ namespace TheatreBlogSystem.Controllers
         // POST: Categories/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin, Moderator, Staff")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "CategoryId,Name")] Category category)
@@ -91,6 +97,7 @@ namespace TheatreBlogSystem.Controllers
         }
 
         // GET: Categories/Delete/5
+        [Authorize(Roles = "Admin, Moderator, Staff")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -106,6 +113,7 @@ namespace TheatreBlogSystem.Controllers
         }
 
         // POST: Categories/Delete/5
+        [Authorize(Roles = "Admin, Moderator, Staff")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

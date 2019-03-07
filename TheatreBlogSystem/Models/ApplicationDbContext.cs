@@ -7,6 +7,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace TheatreBlogSystem.Models
 {
+    /// <summary>
+    /// the context for the database
+    /// </summary>
     public class ApplicationDbContext : IdentityDbContext<User>
     {
         public DbSet<Category> Categories { get; set; }

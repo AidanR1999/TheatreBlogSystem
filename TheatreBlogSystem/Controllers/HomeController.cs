@@ -10,6 +10,10 @@ namespace TheatreBlogSystem.Controllers
 {
     public class HomeController : Controller
     {
+        /// <summary>
+        /// loads the home page
+        /// </summary>
+        /// <returns>Home Page</returns>
         public ActionResult Index()
         {
             return View();

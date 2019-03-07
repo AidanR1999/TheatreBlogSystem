@@ -217,11 +217,11 @@ namespace TheatreBlogSystem.Controllers
         }
         
         /// <summary>
-        /// 
+        /// gets the selected post and loads the details of the post
         /// </summary>
         /// <param name="postId"></param>
         /// <param name="comment"></param>
-        /// <returns></returns>
+        /// <returns>Post Details Page</returns>
         [HttpPost]
         public ActionResult PostDetails(int? postId, string comment)
         {
@@ -255,12 +255,22 @@ namespace TheatreBlogSystem.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// gets the selected category filter and displays posts only from that category
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns>View Posts Page</returns>
         [HttpPost]
         public ActionResult FilterByCategory(string filter)
         {
             return RedirectToAction("ViewPosts", "Posts", new { categoryName = filter });
         }
 
+        /// <summary>
+        /// allows admins and mods to approve posts that staff create
+        /// </summary>
+        /// <param name="postId"></param>
+        /// <returns>View Posts Page</returns>
         [Authorize(Roles = "Admin, Moderator")]
         public ActionResult ApprovePost(int? postId)
         {
@@ -281,6 +291,11 @@ namespace TheatreBlogSystem.Controllers
             return RedirectToAction("ViewPosts", "Posts");
         }
 
+        /// <summary>
+        /// allows admins and mods to disapprove posts that staff create
+        /// </summary>
+        /// <param name="postId"></param>
+        /// <returns>View Posts Page</returns>
         [Authorize(Roles = "Admin, Moderator")]
         public ActionResult DisapprovePost(int? postId)
         {

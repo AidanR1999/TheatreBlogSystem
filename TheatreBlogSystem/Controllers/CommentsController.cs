@@ -13,9 +13,14 @@ namespace TheatreBlogSystem.Controllers
 {
     public class CommentsController : Controller
     {
+        
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Comments
+        /// <summary>
+        /// loads the comments index page, inaccessible through normal use
+        /// </summary>
+        /// <returns>Comments Index Page</returns>
         [Authorize(Roles = "Admin, Moderator")]
         public ActionResult Index()
         {
@@ -24,6 +29,11 @@ namespace TheatreBlogSystem.Controllers
         }
 
         // GET: Comments/Details/5
+        /// <summary>
+        /// gets the selected comment and loads the details page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Comment Details Page</returns>
         [Authorize(Roles = "Admin, Moderator")]
         public ActionResult Details(int? id)
         {
@@ -40,6 +50,10 @@ namespace TheatreBlogSystem.Controllers
         }
 
         // GET: Comments/Create
+        /// <summary>
+        /// loads the comments create page
+        /// </summary>
+        /// <returns>Comments Create Page</returns>
         [Authorize(Roles = "Admin, Moderator, Staff, Customer")]
         public ActionResult Create()
         {
@@ -49,8 +63,11 @@ namespace TheatreBlogSystem.Controllers
         }
 
         // POST: Comments/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// gets the data from the comments create page and adds the comment to the database
+        /// </summary>
+        /// <param name="comment"></param>
+        /// <returns>Comments Index Page</returns>
         [Authorize(Roles = "Admin, Moderator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -69,6 +86,11 @@ namespace TheatreBlogSystem.Controllers
         }
 
         // GET: Comments/Edit/5
+        /// <summary>
+        /// gets the selected comment and loads the comments edit page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Comments Edit Page</returns>
         [Authorize(Roles = "Admin, Moderator")]
         public ActionResult Edit(int? id)
         {
@@ -87,8 +109,11 @@ namespace TheatreBlogSystem.Controllers
         }
 
         // POST: Comments/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// gets the data from the comments edit page and updates the comment in the database
+        /// </summary>
+        /// <param name="comment"></param>
+        /// <returns>Comments Index Page</returns>
         [Authorize(Roles = "Admin, Moderator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -105,7 +130,11 @@ namespace TheatreBlogSystem.Controllers
             return View(comment);
         }
 
-        // GET: Comments/Delete/5
+        /// <summary>
+        /// deletes the selected comment from the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>View Posts Page</returns>
         [Authorize(Roles = "Admin, Moderator")]
         public ActionResult DeleteConfirmed(int id)
         {
@@ -124,6 +153,12 @@ namespace TheatreBlogSystem.Controllers
             base.Dispose(disposing);
         }
 
+        /// <summary>
+        /// adds a comment to the database
+        /// </summary>
+        /// <param name="commentBody"></param>
+        /// <param name="postId"></param>
+        /// <returns>Post Details Page</returns>
         [Authorize(Roles = "Admin, Moderator, Staff, Customer")]
         [HttpPost]
         public ActionResult MakeComment(string commentBody, int? postId)
@@ -146,11 +181,22 @@ namespace TheatreBlogSystem.Controllers
         }
 
         //GET: ViewComments PartialView
+        /// <summary>
+        /// display approved comments in the post details page
+        /// </summary>
+        /// <param name="comments"></param>
+        /// <returns>View Comments Partial View</returns>
         public PartialViewResult _ViewComments(ICollection<Comment> comments)
         {
             return PartialView(comments);
         }
 
+        /// <summary>
+        /// allows admins and moderators to approve selected comments
+        /// </summary>
+        /// <param name="commentId"></param>
+        /// <param name="approved"></param>
+        /// <returns>Post Details Page</returns>
         [Authorize(Roles = "Admin, Moderator")]
         public ActionResult ApproveComment(int? commentId, bool approved)
         {

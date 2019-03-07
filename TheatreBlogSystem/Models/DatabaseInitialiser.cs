@@ -8,6 +8,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace TheatreBlogSystem.Models
 {
+    /// <summary>
+    /// seeds the database with roles, users, categories and posts
+    /// </summary>
     public class DatabaseInitialiser : DropCreateDatabaseIfModelChanges<ApplicationDbContext>
     {
         protected override void Seed(ApplicationDbContext context)
@@ -298,10 +301,6 @@ namespace TheatreBlogSystem.Models
                 context.SaveChanges();
             }
 
-        }//end method
-
-           
-        }//end class
-
-
-    }//end namespace
+        }           
+    }
+}

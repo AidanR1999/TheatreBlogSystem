@@ -16,6 +16,10 @@ namespace TheatreBlogSystem.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Categories
+        /// <summary>
+        /// loads the categories index page
+        /// </summary>
+        /// <returns>Categories Index Page</returns>
         [Authorize(Roles = "Admin, Moderator, Staff")]
         public ActionResult Index()
         {
@@ -23,6 +27,11 @@ namespace TheatreBlogSystem.Controllers
         }
 
         // GET: Categories/Details/5
+        /// <summary>
+        /// gets the selected category and loads its details page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Category Details Page</returns>
         [Authorize(Roles = "Admin, Moderator, Staff")]
         public ActionResult Details(int? id)
         {
@@ -38,7 +47,11 @@ namespace TheatreBlogSystem.Controllers
             return View(category);
         }
 
-        // GET: Categories/Create
+        // GET: Categories/Create7
+        /// <summary>
+        /// loads the categories create page
+        /// </summary>
+        /// <returns>Categories Create Page</returns>
         [Authorize(Roles = "Admin, Moderator, Staff")]
         public ActionResult Create()
         {
@@ -46,8 +59,11 @@ namespace TheatreBlogSystem.Controllers
         }
 
         // POST: Categories/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// gets the data from the categories create page and adds the category to the database
+        /// </summary>
+        /// <param name="category"></param>
+        /// <returns>Categories Index Page</returns>
         [Authorize(Roles = "Admin, Moderator, Staff")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -64,6 +80,11 @@ namespace TheatreBlogSystem.Controllers
         }
 
         // GET: Categories/Edit/5
+        /// <summary>
+        /// gets the selected category and loads the categories edit page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Categories Edit Page</returns>
         [Authorize(Roles = "Admin, Moderator, Staff")]
         public ActionResult Edit(int? id)
         {
@@ -80,8 +101,11 @@ namespace TheatreBlogSystem.Controllers
         }
 
         // POST: Categories/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// gets the data from the categories edit page and updates the category in the database
+        /// </summary>
+        /// <param name="category"></param>
+        /// <returns>Categories Index Page</returns>
         [Authorize(Roles = "Admin, Moderator, Staff")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -97,6 +121,11 @@ namespace TheatreBlogSystem.Controllers
         }
 
         // GET: Categories/Delete/5
+        /// <summary>
+        /// gets the selected category and loads the categories delete page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Categories Delete Page</returns>
         [Authorize(Roles = "Admin, Moderator, Staff")]
         public ActionResult Delete(int? id)
         {
@@ -113,6 +142,11 @@ namespace TheatreBlogSystem.Controllers
         }
 
         // POST: Categories/Delete/5
+        /// <summary>
+        /// deletes the selected category from the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Roles = "Admin, Moderator, Staff")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

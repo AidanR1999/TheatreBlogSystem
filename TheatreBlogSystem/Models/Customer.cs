@@ -10,6 +10,9 @@ namespace TheatreBlogSystem.Models
     /// </summary>
     public class Customer : User
     {
+        /// <summary>
+        /// holds whether or not a customer is suspended
+        /// </summary>
         public bool IsSuspended { get; set; }
     }
 }

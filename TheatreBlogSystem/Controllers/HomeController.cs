@@ -8,6 +8,9 @@ using TheatreBlogSystem.ViewModels;
 
 namespace TheatreBlogSystem.Controllers
 {
+    /// <summary>
+    /// The main handler for actions that relate to the home page
+    /// </summary>
     public class HomeController : Controller
     {
         /// <summary>
@@ -15,6 +18,15 @@ namespace TheatreBlogSystem.Controllers
         /// </summary>
         /// <returns>Home Page</returns>
         public ActionResult Index()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// loads the contact page
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Contact()
         {
             return View();
         }

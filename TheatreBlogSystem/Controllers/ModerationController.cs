@@ -7,6 +7,9 @@ using TheatreBlogSystem.Models;
 
 namespace TheatreBlogSystem.Controllers
 {
+    /// <summary>
+    /// The main handler for actions that relate to the system management
+    /// </summary>
     public class ModerationController : Controller
     {
         // GET: Admin

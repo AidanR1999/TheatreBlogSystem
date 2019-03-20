@@ -12,6 +12,9 @@ using TheatreBlogSystem.Models;
 
 namespace TheatreBlogSystem.Controllers
 {
+    /// <summary>
+    /// The main handler for actions that relate to account sign in and registration
+    /// </summary>
     [Authorize]
     public class AccountController : Controller
     {

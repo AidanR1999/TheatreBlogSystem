@@ -14,13 +14,32 @@ namespace TheatreBlogSystem.Models
 {
     /// <summary>
     /// User class, inherits from IdentityUser class
-    /// Holds extra information about the user such
+    /// Holds extra information about the user
     /// </summary>
     public abstract class User : IdentityUser
     {
+        /// <summary>
+        /// holds the time and date of the users registration
+        /// DateTime
+        /// </summary>
         public DateTime? TimeOfRegistration { get; set; }
+
+        /// <summary>
+        /// holds the user's first name
+        /// String
+        /// </summary>
         public string Forename { get; set; }
+
+        /// <summary>
+        /// holds the user's last name
+        /// String
+        /// </summary>
         public string Surname { get; set; }
+
+        /// <summary>
+        /// holds the user's birth date
+        /// DateTime
+        /// </summary>
         public DateTime DateOfBirth { get; set; }
         
         public User()
@@ -29,9 +48,17 @@ namespace TheatreBlogSystem.Models
         }
 
         //navigational properties
+        /// <summary>
+        /// holds the comments that the user has made
+        /// </summary>
         //1:M - User:Comment
         public virtual ICollection<Comment> Comments { get; set; }
 
+        /// <summary>
+        /// get the identity information about the user
+        /// </summary>
+        /// <param name="manager"></param>
+        /// <returns></returns>
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -40,8 +67,14 @@ namespace TheatreBlogSystem.Models
             return userIdentity;
         }
 
+        /// <summary>
+        /// allows access to user manager
+        /// </summary>
         private ApplicationUserManager userManager;
 
+        /// <summary>
+        /// gets the current role of a user from the user manager
+        /// </summary>
         [NotMapped]
         public string CurrentRole
         {

@@ -11,9 +11,11 @@ using TheatreBlogSystem.Models;
 
 namespace TheatreBlogSystem.Controllers
 {
+    /// <summary>
+    /// The main handler for actions that relate to comments
+    /// </summary>
     public class CommentsController : Controller
     {
-        
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Comments

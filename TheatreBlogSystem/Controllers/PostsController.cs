@@ -13,6 +13,9 @@ using TheatreBlogSystem.ViewModels;
 
 namespace TheatreBlogSystem.Controllers
 {
+    /// <summary>
+    /// The main handler for actions that relate to the posts
+    /// </summary>
     public class PostsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

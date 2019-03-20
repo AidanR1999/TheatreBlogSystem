@@ -13,6 +13,9 @@ using WebGrease;
 
 namespace TheatreBlogSystem.Controllers
 {
+    /// <summary>
+    /// The main handler for all actions that relate to the user
+    /// </summary>
     public class UsersController : AccountController
     {
         private ApplicationDbContext db = new ApplicationDbContext();

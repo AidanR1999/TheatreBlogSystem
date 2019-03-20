@@ -11,6 +11,9 @@ using TheatreBlogSystem.ViewModels;
 
 namespace TheatreBlogSystem.Controllers
 {
+    /// <summary>
+    /// The main handler for actions that relate to categories
+    /// </summary>
     public class CategoriesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
